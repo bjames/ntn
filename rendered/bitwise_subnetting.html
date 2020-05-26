@@ -1,0 +1,1129 @@
+<p>title: Bitwise Operations and Subnetting published: 2019-07-29 category: - Route/Switch - Programming author: Brandon James summary: I wrote a simple subnet calculator in C. Here are my takeaways from the process and some information on how it works.</p>
+<p>Back in September of 2016 I wrote a <a href="https://github.com/bjames/subnet">subnet calculator in C</a> and then blogged about it. This entry is based on that old blog post.</p>
+<h2 id="converting-to-and-from-dotted-decimal-notation">Converting To and From Dotted Decimal Notation</h2>
+<p>IPv4 Addresses are simply unsigned 32-bit integers. This makes it easy to perform calculations on them using bitwise operations. It’s common to see IP addresses represented as four seperate octets. This is done primarily for readablity, but it also aids in intuition when you start looking at the math behind IP subnets.</p>
+<h3 id="converting-from-dotted-decimal-notation">Converting FROM Dotted Decimal Notation</h3>
+<p>In order to do anything useful, we first need to take the human provided dotted decimal notation and convert it to a 32 bit unsigned integer.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> dotted_decimal_to_int(<span class="dt">char</span> ip[]){</span>
+<span id="cb1-2"><a href="#cb1-2"></a> </span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="co">// char is exactly 1 byte</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="dt">unsigned</span> <span class="dt">char</span> bytes[<span class="dv">4</span>] = {<span class="dv">0</span>};</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    </span>
+<span id="cb1-6"><a href="#cb1-6"></a>    sscanf(ip, <span class="st">&quot;%hhd.%hhd.%hhd.%hhd&quot;</span>, &amp;bytes[<span class="dv">3</span>], &amp;bytes[<span class="dv">2</span>], &amp;bytes[<span class="dv">1</span>], &amp;bytes[<span class="dv">0</span>]);</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    </span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="co">// set 1 byte at a time by left shifting (&lt;&lt;) and ORing (|)</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="cf">return</span> bytes[<span class="dv">0</span>] | bytes[<span class="dv">1</span>] &lt;&lt; <span class="dv">8</span> | bytes[<span class="dv">2</span>] &lt;&lt; <span class="dv">16</span> | bytes[<span class="dv">3</span>] &lt;&lt; <span class="dv">24</span>;</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>}</span></code></pre></div>
+<p>This function works by scanning the C string containing the IP address provided by the user into an array of bytes. It then returns an unsigned integer. Using 192.168.0.1 as an example, we first read the octets into an arry of bytes. This results in something similar to the following in memory:</p>
+<table>
+<tr>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Base
+</th>
+</tr>
+<tr>
+<td>
+192
+</td>
+<td>
+168
+</td>
+<td>
+0
+</td>
+<td>
+1
+</td>
+<td>
+Decimal
+</td>
+</tr>
+<tr>
+<td>
+11000000<br>
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000001
+</td>
+<td>
+Binary
+</td>
+</tr>
+</table>
+<p>As we return the unsigned int, the bytes are left shifted so that they are properly aligned and then a logical OR is applied to combine the bytes. The result of this is a 32-bit representation of the IP address. In this case, the resulting integer in decimal is 3,232,235,521. The table below shows what the left shift looks like in memory.</p>
+<table>
+<tbody>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+Byte[3]
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+00000001
+</td>
+<td>
+N/A
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<tbody>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+Byte[2]
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+00000000
+</td>
+<td>
+<blockquote>
+<blockquote>
+8
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</blockquote>
+<table>
+<tbody>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+Byte[1]
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+<span style="visibility: hidden;">00000000</span>
+</td>
+<td>
+10101000
+</td>
+<td>
+<blockquote>
+<blockquote>
+16
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</blockquote>
+<table>
+<tbody>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+Byte[0]
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+11000000
+</td>
+<td>
+<blockquote>
+<blockquote>
+24
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</blockquote>
+<p>And the OR operation:</p>
+<table>
+<tbody>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+Byte[0]
+</td>
+<td>
+11000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Byte[1]
+</td>
+<td>
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+OR
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Byte[2]
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+OR
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Byte[3]
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+00000001
+</td>
+<td>
+OR
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000001
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="converting-to-dotted-decimal-notation">Converting TO Dotted Decimal Notation</h3>
+<p>After we’ve finished performing our calculations, we need to return the subnet to a human readable format. This can be done with the following function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="dt">void</span> printip(<span class="dt">int</span> ip){</span>
+<span id="cb2-2"><a href="#cb2-2"></a> </span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="co">// takes a 32 bit integer and prints it as 4 decimal separate octets</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    </span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="dt">unsigned</span> <span class="dt">char</span> bytes[<span class="dv">4</span>];</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    </span>
+<span id="cb2-7"><a href="#cb2-7"></a>    <span class="co">// set the byte to the first byte of the ip</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>    bytes[<span class="dv">0</span>] = ip;</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    bytes[<span class="dv">1</span>] = ip &gt;&gt; <span class="dv">8</span>; <span class="co">// right shift by a byte and repeat</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    bytes[<span class="dv">2</span>] = ip &gt;&gt; <span class="dv">16</span>;</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    bytes[<span class="dv">3</span>] = ip &gt;&gt; <span class="dv">24</span>;</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    </span>
+<span id="cb2-13"><a href="#cb2-13"></a>    printf(<span class="st">&quot;%d.%d.%d.%d</span><span class="sc">\n</span><span class="st">&quot;</span>, bytes[<span class="dv">3</span>], bytes[<span class="dv">2</span>], bytes[<span class="dv">1</span>], bytes[<span class="dv">0</span>]);</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    </span>
+<span id="cb2-15"><a href="#cb2-15"></a>    <span class="cf">return</span>;</span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a> }</span></code></pre></div>
+<p>This function works by taking our 32-bit integer and breaking it into 4 separate bytes that can be evaluated separately. We do this by assigning each separate byte to a member of a char array. This is done by right shifting the number by 8 bits prior to each assignment. Note that the right shift operator causes the bits at the end get rotated to the front.</p>
+<p>Using 192.168.0.1 as our example again:</p>
+<table>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+byte[0]
+</td>
+<td>
+<strong>11000000</strong>
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000001
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+byte[1]
+</td>
+<td>
+<strong>10101000</strong>
+</td>
+<td>
+00000000
+</td>
+<td>
+00000001
+</td>
+<td>
+11000000
+</td>
+<td>
+&lt;&lt;8
+</td>
+</tr>
+<tr>
+<td>
+byte[2]
+</td>
+<td>
+<strong>00000000</strong>
+</td>
+<td>
+00000001
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+&lt;&lt;16
+</td>
+</tr>
+<tr>
+<td>
+byte[3]
+</td>
+<td>
+<strong>00000001</strong>
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+10101000
+</td>
+<td>
+&lt;&lt;24
+</td>
+</tr>
+</table>
+<p>In the above example, after each shift we are setting the contents of byte 1 to the current index of our byte array. Then we simply use printf to display the integer in dotted decimal notation.</p>
+<h3 id="converting-to-and-from-cidr-notation">Converting To and From CIDR Notation</h3>
+<p>Subnets are commonly referenced using CIDR notation (eg 192.168.0.0/24). Since CIDR notation is simply the number of most significant bits set, it’s pretty easy to create a function to do the conversion.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> cidr_to_mask(<span class="dt">unsigned</span> <span class="dt">int</span> cidrValue){ </span>
+<span id="cb3-2"><a href="#cb3-2"></a>    </span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="co">// left shift 1 by 32 - cidr, subtract 1 from the result and XORing</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="co">// it with a mask that has all bits set, yeilds the subnet mask</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="cf">return</span> -<span class="dv">1</span> ^ ((<span class="dv">1</span> &lt;&lt; (<span class="dv">32</span> - cidrValue)) - <span class="dv">1</span>);</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a>}</span></code></pre></div>
+<p>I’ll show how this works by using a /24 mask. First we subtract 32 by 24, which yields 8. Then we left shift 1 8 times, which yields 1 00000000. Next, we subtract the result by 1, yielding 11111111. Finally, we XOR the result with -1 (when working with unsigned values, -1 sets all bits), which results in 11111111 11111111 11111111 00000000.</p>
+<table>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000001
+</td>
+<td>
+&lt;&lt;8
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000001
+</td>
+<td>
+00000000
+</td>
+<td>
+-1
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+11111111
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+-1
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+XOR
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+</table>
+<p>Additionally, if the user gives us a subnet mask using dotted decimal notation, we’ll want to give them the mask in CIDR notation. This can be done by counting the number of bits set in the subnet mask.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> cidr_to_mask(<span class="dt">unsigned</span> <span class="dt">int</span> cidrValue){</span>
+<span id="cb4-2"><a href="#cb4-2"></a> </span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="co">// left shift 1 by 32 - cidr, subtract 1 from the result and XORing</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="co">// it with a mask that has all bits set, yeilds the subnet mask</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="cf">return</span> -<span class="dv">1</span> ^ ((<span class="dv">1</span> &lt;&lt; (<span class="dv">32</span> - cidrValue)) - <span class="dv">1</span>);</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>}</span></code></pre></div>
+<p>This function works as follows:</p>
+<table>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+<th>
+CIDR
+</th>
+</tr>
+<tr>
+<td>
+Mask
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Mask - 1
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111110
+</td>
+<td>
+00000000
+</td>
+<td>
+AND
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111110
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+Result - 1
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111101
+</td>
+<td>
+00000000
+</td>
+<td>
+AND
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111100
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+Result - 1
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+‭11111011‬
+</td>
+<td>
+00000000
+</td>
+<td>
+AND
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+‭11111000‬
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+‭11110111‬
+</td>
+<td>
+00000000
+</td>
+<td>
+AND
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+‭11110000‬
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+<td>
+4
+</td>
+</tr>
+</table>
+<p>…</p>
+<blockquote>
+<p>continue until no bits are set</p>
+</blockquote>
+<p>Now that we’ve dealt with the human readability issues. Let’s take a look at the operations that actually deal with subnet calculations.</p>
+<h3 id="calculating-the-network-and-broadcast-address">Calculating the Network and Broadcast Address</h3>
+<p>First off, to calculate the Network or Subnet address, we simply take the IP address and netmask and apply the AND operation. The truth table below is for an IP address of 192.168.0.10 with a /24 mask.</p>
+<table>
+<tbody>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+IP
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00001010
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Mask
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+11111111
+</td>
+<td>
+00000000
+</td>
+<td>
+AND
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+</table>
+<p>In C this function is simply expressed as:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> calc_network_address(<span class="dt">unsigned</span> <span class="dt">int</span> ipaddress, <span class="dt">unsigned</span> <span class="dt">int</span> netmask){</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="cf">return</span> ipaddress &amp; netmask;</span>
+<span id="cb5-3"><a href="#cb5-3"></a>}</span></code></pre></div>
+<p>Calculating the broadcast address is as simple as adding the network address to the subnet’s complement (ie the result of the NOT operation on the subnet mask). Again using the same network as our previous example.</p>
+<table>
+<tr>
+<th>
+Variable
+</th>
+<th>
+Byte 0
+</th>
+<th>
+Byte 1
+</th>
+<th>
+Byte 2
+</th>
+<th>
+Byte 3
+</th>
+<th>
+Operation
+</th>
+</tr>
+<tr>
+<td>
+IP
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+~Mask
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+00000000
+</td>
+<td>
+11111111
+</td>
+<td>
++
+</td>
+</tr>
+<tr>
+<td>
+Result
+</td>
+<td>
+11000000
+</td>
+<td>
+10101000
+</td>
+<td>
+00000000
+</td>
+<td>
+11111111
+</td>
+<td>
+</td>
+</tr>
+</table>
+<p>The dotted decimal result is 192.168.0.255. This is another operation that is easily expressed in C.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> calc_broadcast(<span class="dt">unsigned</span> <span class="dt">int</span> network, <span class="dt">unsigned</span> <span class="dt">int</span> netmask){</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="cf">return</span> network + (~netmask);</span>
+<span id="cb6-3"><a href="#cb6-3"></a>}</span></code></pre></div>
+<h3 id="other-calculations">Other Calculations</h3>
+<p>Once we have the network address and the subnet mask, it’s trivial to calculate our first host (network address + 1), last host (broadcast address - 1) and number of hosts (broadcast - first host).</p>
+<p>This is not the most complete subnet calculator on the internet, nor is it supposed to be. However, I think it provides several good examples of things that can be done with bitwise operations and provides additional intuition for why we use subnet masks.</p>

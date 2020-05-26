@@ -1,0 +1,95 @@
+<p>title: A Practical Guide to Multicast using PIM Sparse Mode and Bootstrap Router category: - Route/Switch author: Brandon James summary:</p>
+<p>Multicast is often a scary word for Network Engineers and I think this is due to the way courses, books and whitepapers teach multicast. It’s an older protocol<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> with lots of weird rules and deployment options. Educators and vendors want to explain multicast in it’s entirety, but most people really just need PIM Sparse Mode and BSR. In this article I cover Multicast Addressing, PIM Sparse Mode, Bootstrap Router, Layer 2 Multicast and IGMP Snooping.</p>
+<h1 id="multicast-addressing">Multicast Addressing</h1>
+<p>Multicast Addresses are also referred to as Multicast Groups. <a href="https://tools.ietf.org/html/rfc5771">RFC 5771</a> defines the best practices for Multicast Group assignments:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Address Range</th>
+<th>Size</th>
+<th>Designation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>224.0.0.0 - 224.0.0.255</td>
+<td>/24</td>
+<td>Local Network Control Block</td>
+</tr>
+<tr class="even">
+<td>224.0.1.0 - 224.0.1.255</td>
+<td>/24</td>
+<td>Internetwork Control Block</td>
+</tr>
+<tr class="odd">
+<td>224.0.2.0 - 224.0.255.255</td>
+<td>65024</td>
+<td>AD-HOC Block I</td>
+</tr>
+<tr class="even">
+<td>224.1.0.0 - 224.1.255.255</td>
+<td>/16</td>
+<td>RESERVED</td>
+</tr>
+<tr class="odd">
+<td>224.2.0.0 - 224.2.255.255</td>
+<td>/16</td>
+<td>SDP/SAP Block</td>
+</tr>
+<tr class="even">
+<td>224.3.0.0 - 224.4.255.255</td>
+<td>2 /16s</td>
+<td>AD-HOC Block II</td>
+</tr>
+<tr class="odd">
+<td>224.5.0.0 - 224.255.255.255</td>
+<td>251 /16s</td>
+<td>RESERVED</td>
+</tr>
+<tr class="even">
+<td>225.0.0.0 - 231.255.255.255</td>
+<td>7 /8s</td>
+<td>RESERVED</td>
+</tr>
+<tr class="odd">
+<td>232.0.0.0 - 232.255.255.255</td>
+<td>/8</td>
+<td>Source-Specific Multicast Block</td>
+</tr>
+<tr class="even">
+<td>233.0.0.0 - 233.251.255.255</td>
+<td>16515072</td>
+<td>GLOP Block</td>
+</tr>
+<tr class="odd">
+<td>233.252.0.0 - 233.255.255.255</td>
+<td>/14</td>
+<td>AD-HOC Block III</td>
+</tr>
+<tr class="even">
+<td>234.0.0.0 - 238.255.255.255</td>
+<td>5 /8s</td>
+<td>RESERVED</td>
+</tr>
+<tr class="odd">
+<td>239.0.0.0 - 239.255.255.255</td>
+<td>/8</td>
+<td>Administratively Scoped Block</td>
+</tr>
+</tbody>
+</table>
+<p>I only cover IPv4 in this article, but IPv6 has similar reservations. (RFC 7346)[https://tools.ietf.org/html/rfc7346] is a good starting point for anyone wanting to learn about IPv6 multicast.</p>
+<p>(IPv4 Multicast reservations are handled by IANA)[https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml]</p>
+<h2 id="local-network-control-block-224.0.0.024">Local Network Control Block (224.0.0.0/24)</h2>
+<p>Used for things like HSRP, VRRP and OSPF, multicast groups within this space are specifically not routable. This is done for a good reason, the protocols with assignments in this space are typically meant for use within a single broadcast domain and a single device might have multiple instances of one of these protocols. As an example, a L3 switch running HSRP will most likely be running HSRP on all of it’s SVIs. If the HSRP multicast group was routable, this could cause a single SVI to become the only active router on the entire switch.</p>
+<h2 id="local-internetwork-control-block-224.0.1.024">Local Internetwork Control Block (224.0.1.0/24)</h2>
+<h1 id="pim-sparse-mode">PIM Sparse-Mode</h1>
+<h1 id="bootstrap-router">Bootstrap Router</h1>
+<h1 id="layer-2-multicast">Layer 2 Multicast</h1>
+<h1 id="igmp-snooping">IGMP Snooping</h1>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>IP Multicast was first standardized in 1986, see <a href="https://tools.ietf.org/html/rfc988">RFC 988</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>

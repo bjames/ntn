@@ -1,0 +1,51 @@
+<p>title: Extending C with Python - Preliminaries published: category: - Programming author: Brandon James summary:</p>
+<p>I’ve been meaning to revist C for a while now. I think having a compiled language in my toolbox is important. As someone who mostly programs in Python, C makes a lot of sense because you can write Python modules using C. This is something you might need to do if you are doing anything computationally intensive and only if it’s absolutely necessary. Python is generally fast enough and premature optimization often leads to bugs and difficult to maintain code.</p>
+<p>I haven’t touched C since college, but I remember enough of it that most of the online tutorials are overly basic. So I decided an appropriate way to relearn C would be to write a Python Module in C. I started working through the <a href="https://docs.python.org/3/extending/extending.html">Python Doc on Extending Python with C</a> and I found that it assumes either a whole lot of background on C and the Python/C API or it assumes the reader is willing to spend a significant time doing research as they read through the doc. In this article, I share my notes from working through the example module assuming the reader has little or no background in C. There will be a follow up article where I write a Python module in C that is more applicable to network engineers. In that article I will also compare the running time of the C module and an equivelent native Python module.</p>
+<h1 id="breaking-down-hello-world">Breaking Down Hello, World!</h1>
+<p>Before we start talking about creating Python modules in C, let’s do a brief overview of a basic C program.</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+void main(){
+
+    printf(&quot;Hello, World!\n&quot;);
+
+}</code></pre>
+<p>Even if you’ve never written C before, you’ve probably created a similar program in some other langauge. Let’s break down each component.</p>
+<h2 id="the-building-process">The Building Process</h2>
+<p>When we write Python code, you don’t need to worry about how the interpriter works. In C, the building process can directly impact how your code is executed, so it’s important to think about how your code is manipulated when you invoke your compiler.</p>
+<ol type="1">
+<li>Preprocess</li>
+</ol>
+<p>The preprocessor makes changes to your .c file based on the preprocessor directives mentioned earlier. The code output by the preprocessor is still <em>human readable</em> C code.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<ol start="2" type="1">
+<li>Compile</li>
+</ol>
+<p>The compiler translates your preprocessed C code into assembly language code<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<ol start="3" type="1">
+<li>Assemble</li>
+</ol>
+<p>The assembler translates your compiled code into machine readable object code<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<ol start="4" type="1">
+<li>Link</li>
+</ol>
+<p>The compiler then <em>links</em> the object code to any libraries you are using<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. What actually happens here differs between operating systems, but broadly speaking code can be either statically linked or dynamically linked. When code is statically linked, the library code is merged with your code. When code is dynamically linked, the libraries continue to exist as seperate pieces of code on your hard drive. These bits of code can be shared with other dynamically linked applications<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p>Once this process is complete your code is ready to be executed.</p>
+<h2 id="include"><code>&lt;#include&gt;</code></h2>
+<p>In C, any statement begining with <code>#</code> is a preprocessor directive<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. <code>#include</code> tells the preprocessor to inject the code mentioned in the <code>#include</code> statement into the file. Unlike Python, C doesn’t provide a print function by default. So in order to write to the terminal we need to import <code>stdio.h</code>. Just like the name implies, <code>stdio</code> is the portion of the standard library that provides IO functions. If you have access to a linux machine, it’s very likely you have <code>stdio.h</code> sitting in a folder somewhere. You can find it with <code>locate stdio.h</code> and peek at the code if you are curious<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
+<p>It should be noted that you won’t actually see a printf function instead the header file, instead you’ll find a function prototype:</p>
+<pre><code>extern int printf (const char *__restrict __format, ...);</code></pre>
+<p>These prototypes exist only to help the compiler verify your use of the function. In the case of C standard library functions, your compiler already has precompiled copies of the code. After your code has been compiled, it is linked to the precompiled library<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. When you run your program, it makes calls to these libraries.</p>
+<h1 id="section"></h1>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>You can invoke GCC with the -E flag to only run the preprocessing step. In our simple hello world example, this generates a 731 line file.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>You can invoke GCC with the -S flag to stop after the compilation step. This generates a .s file contining the assembly langauge code for your program.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>You can invoke GCC with the -c flag to stop after the assembly step. This generates a .o file continuing object code. Unlike the fully built .out file the .o file will give you an error when you try to run it. My Fedora 32 system says <code>bash: ./hello.o: cannot execute binary file: Exec format error</code> ***********Rewrite this*************<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>When using external libraries, you generally need to tell the compiler where to find the library object files. ************Rewrite this***********<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>In Linux this is handled via the Executable and Linkable Format (ELF), which is described in detail <a href="http://www.skyfree.org/linux/references/ELF_Format.pdf">here</a> or for a brief linking focused overview you can follow this <a href="http://csapp.cs.cmu.edu/2e/ch7-preview.pdf">link</a>. A good start point for Windows DLLs is avaliable <a href="https://support.microsoft.com/en-us/help/815065/what-is-a-dll">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>You can read more about preprocessor directives <a href="https://en.wikibooks.org/wiki/C_Programming/Preprocessor_directives_and_macros">here</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>Alternatively, you can view it on the <a href="https://sourceware.org/git/?p=glibc.git;a=blob;f=include/stdio.h;h=9df98b283353e3d5610b8036876833e86a8eeab0;hb=HEAD">web</a>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>The printf function is found in printf.c in the stdlib, you can view it <a href="https://sourceware.org/git/?p=glibc.git;a=blob;f=stdio-common/printf.c;h=15f71c1feddf9e8324ab38afb351c7840af5a8fc;hb=9ea3686266dca3f004ba874745a4087a89682617">here</a>. On Fedora 32, the compiled object file (assuming you are compiling with gcc) is located at /lib/gcc/x86_64-redhat-linux/10/32/libgcc.a.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
