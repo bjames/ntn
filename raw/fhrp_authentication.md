@@ -1,3 +1,4 @@
+---
 title: Don't use FHRPs without Authentication
 published: 2019-02-17
 category:
@@ -6,7 +7,7 @@ category:
 author: Brandon James
 summary: FHRPs have obvious benefits, but a misconfiguration could allow an attacker to MiTM your traffic.
 post_image: /static/images/fhrp_diagram1.png
-
+---
 You are most likely running a first hop redundancy protocol somewhere in your network. If you aren't routing at the access layer and your running a traditional redundant core (ie you aren't using a switch virtualization platform such as Cisco's VSS), one of those places is probably your user facing SVIs. If you aren't using *encrypted* authentication on your FHRP, you're putting your enterprise at risk. 
 
 As a bit of a proof of concept, I've put together the following to show how FHRPs can be used as a channel to launch a Man-in-the-Middle attack. 

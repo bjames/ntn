@@ -1,9 +1,10 @@
+---
 title: A Practical Guide to Multicast using PIM Sparse Mode and Bootstrap Router
 category:
 - Route/Switch
 author: Brandon James
 summary: 
-
+---
 Multicast is often a scary word for Network Engineers and I think this is due to the way courses, books and whitepapers teach multicast. It's an older protocol[^1] with lots of weird rules and deployment options. Educators and vendors want to explain multicast in it's entirety, but most people really just need PIM Sparse Mode and BSR. In this article I cover Multicast Addressing, PIM Sparse Mode, Bootstrap Router, Layer 2 Multicast and IGMP Snooping. 
 
 

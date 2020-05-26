@@ -1,9 +1,8 @@
 import pypandoc
 import os
-import pyaml
-import re
 
 from config import renderer_config
+from yaml import load
 
 input_directory = os.fspath(renderer_config["input_directory"])
 output_directory = os.fspath(renderer_config["output_directory"])
@@ -23,4 +22,25 @@ for file in os.listdir(input_directory):
             extra_args=(renderer_config["pandoc_extra_args"])
         )
 
-        metadata = re.compile(r"^---\n(^.*\n)*^---\n")
+        with open(file_path) as markdown_file:
+
+            metadata = ""
+            meta_block_delimiter = 0
+
+            for line in markdown_file:
+    
+                if "---" in line:
+
+                    meta_block_delimiter = meta_block_delimiter + 1
+
+                    if meta_block_delimiter > 1:
+
+                        break
+                
+                elif meta_block_delimiter > 0:
+
+                    metadata += line
+
+            test = load(metadata)
+
+        print(test)

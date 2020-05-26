@@ -1,4 +1,3 @@
-<p>title: Bitwise Operations and Subnetting published: 2019-07-29 category: - Route/Switch - Programming author: Brandon James summary: I wrote a simple subnet calculator in C. Here are my takeaways from the process and some information on how it works.</p>
 <p>Back in September of 2016 I wrote a <a href="https://github.com/bjames/subnet">subnet calculator in C</a> and then blogged about it. This entry is based on that old blog post.</p>
 <h2 id="converting-to-and-from-dotted-decimal-notation">Converting To and From Dotted Decimal Notation</h2>
 <p>IPv4 Addresses are simply unsigned 32-bit integers. This makes it easy to perform calculations on them using bitwise operations. It’s common to see IP addresses represented as four seperate octets. This is done primarily for readablity, but it also aids in intuition when you start looking at the math behind IP subnets.</p>

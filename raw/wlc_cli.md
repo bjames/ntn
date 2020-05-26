@@ -1,3 +1,4 @@
+---
 title: WLC CLI Cheatsheet
 published: 2019-07-30
 category:
@@ -5,7 +6,7 @@ category:
 - Cheatsheets
 author: Brandon James
 summary: The WLC CLI can be a little less than intuitive at times. I put together this quick reference with some of my most used WLC commands.
-
+---
 I'm on the WLC CLI much less often than NXOS or IOS so I haven't really committed all the commands to memory. This reference documents some of the useful things I do or have done in the past on the WLC CLI.
 
 ### Useful Show Commands
