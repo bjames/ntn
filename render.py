@@ -1,5 +1,7 @@
 import pypandoc
 import os
+import pyaml
+import re
 
 from config import renderer_config
 
@@ -16,7 +18,9 @@ for file in os.listdir(input_directory):
 
         pypandoc.convert_file(
             file_path,
-            "html",
+            "html5",
             outputfile=f"{output_directory}{clean_filename}.html",
             extra_args=(renderer_config["pandoc_extra_args"])
         )
+
+        metadata = re.compile(r"^---\n(^.*\n)*^---\n")
