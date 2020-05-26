@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+{% for note in notes %}
+    <p><a href = {{note.filename }}>{{ note.title }} - {{ note.filename }}</a></p>
+{% endfor %}
+{% endblock %}

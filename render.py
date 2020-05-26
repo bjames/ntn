@@ -2,45 +2,65 @@ import pypandoc
 import os
 
 from config import renderer_config
-from yaml import load
+from yaml import safe_load
+
+from notes import Note
 
 input_directory = os.fspath(renderer_config["input_directory"])
 output_directory = os.fspath(renderer_config["output_directory"])
 
-for file in os.listdir(input_directory):
+def get_metadata(file_path: str) -> dict:
 
-    filename = os.fsdecode(file)
-    clean_filename = filename.strip(renderer_config["input_file_extensions"])
-    file_path = f"{input_directory}{filename}"
+    with open(file_path) as markdown_file:
 
-    if filename.endswith(renderer_config["input_file_extensions"]):
+        metadata = ""
+        meta_delimiter_count = 0
 
-        pypandoc.convert_file(
-            file_path,
-            "html5",
-            outputfile=f"{output_directory}{clean_filename}.html",
-            extra_args=(renderer_config["pandoc_extra_args"])
-        )
+        for line in markdown_file:
 
-        with open(file_path) as markdown_file:
+            if "---" in line:
 
-            metadata = ""
-            meta_block_delimiter = 0
+                meta_delimiter_count = meta_delimiter_count + 1
 
-            for line in markdown_file:
-    
-                if "---" in line:
+                if meta_delimiter_count > 1:
 
-                    meta_block_delimiter = meta_block_delimiter + 1
+                    break
+            
+            elif meta_delimiter_count > 0:
 
-                    if meta_block_delimiter > 1:
+                metadata += line
 
-                        break
-                
-                elif meta_block_delimiter > 0:
+    return(safe_load(metadata))
 
-                    metadata += line
 
-            test = load(metadata)
 
-        print(test)
+def render_all():
+
+    notes = []
+
+    for file in os.listdir(input_directory):
+
+        filename = os.fsdecode(file)
+        clean_filename = filename.strip(renderer_config["input_file_extensions"])
+        file_path = f"{input_directory}{filename}"
+
+        if filename.endswith(renderer_config["input_file_extensions"]):
+
+            output_file = f"{output_directory}{clean_filename}.html"
+
+            pypandoc.convert_file(
+                file_path,
+                "html5",
+                outputfile=output_file,
+                extra_args=(renderer_config["pandoc_extra_args"])
+            )
+
+            metadata = get_metadata(file_path)
+
+            notes.append(Note(output_file, clean_filename, **metadata))
+
+    return notes
+
+if __name__ == "__main__":
+
+    render_all()

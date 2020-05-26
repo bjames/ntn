@@ -1,22 +1,28 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
+from render import render_all
 
 import os
 import config
 
 app = Flask(__name__)
 
-note_dir = os.fspath(config.renderer_config["output_directory"])
-notes = [file for file in os.listdir(note_dir)]
+notes = render_all()
 
-@app.route('/')
+@app.route("/")
 def hello():
-    return 'Hello World!'
 
-@app.route('/<path>')
-def posts(path):
+    return render_template("index.html", notes=notes)
 
-    return os.open(f"{note_dir}{path}.html").read()
+@app.route("/<path:filename>")
+def posts(filename):
 
+    return render_template("note.html", filename=filename)
+
+@app.template_global()
+def rendered(filename):
+    fullpath = os.path.join(config.renderer_config["output_directory"], f"{filename}.html")
+    with open(fullpath, 'r') as f:
+        return f.read()
 
 if __name__ == '__main__':
 
