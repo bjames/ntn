@@ -10,14 +10,22 @@ class Note:
 
     def __init__(self, path: str, filename: str, **kwargs):
 
+        # provided by the renderer
         self.path = os.fsdecode(path)    
-        self.filename = filename    
+        self.filename = filename
+
+        # default/required  
         self.title = kwargs.get("title")
         self.author = kwargs.get("author")
+        self.publication_date = kwargs.get("publication_date")
         self.published = kwargs.get("published") 
         self.category = kwargs.get("category")
         self.summary = kwargs.get("summary")
+
+        # default value provided
         self.update_interval = kwargs.get("update_interval")
+        
+        # non-default, default value provided in config
         self.post_image = kwargs.get("post_image")
 
     def __init_note_from_file(self):

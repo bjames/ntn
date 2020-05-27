@@ -1,13 +1,13 @@
 import pypandoc
 import os
 
-from config import renderer_config
+from config import RENDERER_CONFIG
 from yaml import safe_load
 
 from notes import Note
 
-input_directory = os.fspath(renderer_config["input_directory"])
-output_directory = os.fspath(renderer_config["output_directory"])
+input_directory = os.fspath(RENDERER_CONFIG["input_directory"])
+output_directory = os.fspath(RENDERER_CONFIG["output_directory"])
 
 def get_metadata(file_path: str) -> dict:
 
@@ -41,10 +41,10 @@ def render_all():
     for file in os.listdir(input_directory):
 
         filename = os.fsdecode(file)
-        clean_filename = filename.strip(renderer_config["input_file_extensions"])
+        clean_filename = filename.strip(RENDERER_CONFIG["input_file_extensions"])
         file_path = f"{input_directory}{filename}"
 
-        if filename.endswith(renderer_config["input_file_extensions"]):
+        if filename.endswith(RENDERER_CONFIG["input_file_extensions"]):
 
             output_file = f"{output_directory}{clean_filename}.html"
 
@@ -52,7 +52,7 @@ def render_all():
                 file_path,
                 "html5",
                 outputfile=output_file,
-                extra_args=(renderer_config["pandoc_extra_args"])
+                extra_args=(RENDERER_CONFIG["pandoc_extra_args"])
             )
 
             metadata = get_metadata(file_path)

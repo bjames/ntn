@@ -1,6 +1,7 @@
-renderer_config = {
+RENDERER_CONFIG = {
     "input_directory": "./raw/",
     "input_file_extensions": (".md"),
     "output_directory": "./rendered/",
     "pandoc_extra_args": ["--toc"]
 }
+SITE_NAME = "Notes Core"
