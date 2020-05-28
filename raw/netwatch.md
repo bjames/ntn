@@ -1,6 +1,6 @@
 ---
 title: Practical Automation - Netwatch
-published: 2019-09-12
+publication_date: 2019-09-12
 category:
 - Automation
 - Programming

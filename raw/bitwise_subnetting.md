@@ -1,6 +1,6 @@
 ---
 title: Bitwise Operations and Subnetting
-published: 2019-07-29
+publication_date: 2019-07-29
 category:
 - Route/Switch
 - Programming

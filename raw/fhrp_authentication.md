@@ -1,6 +1,6 @@
 ---
 title: Don't use FHRPs without Authentication
-published: 2019-02-17
+publication_date: 2019-02-17
 category:
 - Route/Switch
 - Security

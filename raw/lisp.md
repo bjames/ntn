@@ -2,7 +2,7 @@
 title: Locator/ID Separation Protocol - LISP
 category:
 - Route/Switch
-published: 2019-09-04
+publication_date: 2019-09-04
 author: Brandon James
 post_image: /static/images/lisp_overview.png
 summary: The Locator/ID Separation Protocol or LISP was originally designed to decrease the size of routing tables on the Internet. As the protocol matured it made it's way into the enterprise[^1] though solutions like Cisco Software Defined Access. In this article I provide a summary of the problem LISP solves and how LISP functions. The purpose of this article isn't to cover the protocol in it's entirety, but to build an awareness of how the protocol works.

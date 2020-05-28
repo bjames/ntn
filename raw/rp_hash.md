@@ -1,6 +1,6 @@
 ---
 title: Bootstrap Router Hash Function
-published: 2019-12-06
+publication_date: 2019-12-06
 category:
 - Route/Switch
 - Programming

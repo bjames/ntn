@@ -2,8 +2,11 @@
 <!DOCTYPE html>
 <head>
     <title>{{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='notes-core.css') }}"/>
 </head>
 <body class={% block body_class %}{% endblock %}>
+{% include "header.html" %}
 {% include "nav.html" %}
 {% block content %}{% endblock %}
+{% include "footer.html" %}
 </body>

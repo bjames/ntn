@@ -1,6 +1,6 @@
 ---
 title: Never The Network
-published: 2019-11-23
+publication_date: 2019-11-23
 category: 
 - unfiled
 author: Brandon James

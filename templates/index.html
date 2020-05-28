@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 {% for note in notes %}
-    <p><a href = {{note.filename }}>{{ note.title }}</a></p>
+    <div class="note_preview">
+        <p class="note_preview_title"><a href = {{ config.NOTES_DIR }}/{{ note.filename }}>{{ note.title }}</a> 
+        <p class="note_preview_subtitle">By {{ note.author }} on {{ note.publication_date }}</p>
+        <p class="note_preview_summary">{{ note.summary }}</p>
+        </p>
+    </div>
 {% endfor %}
 {% endblock %}

@@ -31,6 +31,7 @@ class Note:
     def __init_note_from_file(self):
 
         """ returns note attributes from parsing metadata in file """
+        pass
 
     def __str__(self):
 

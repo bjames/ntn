@@ -1,2 +1,7 @@
-{# TODO make this dynamic #}
-<a href="/">Home</a>
+<div class=navbar>
+<ul>
+{% for link in config.NAV_LINKS %}
+<li><a href={{ link[0] }}>{{ link[1] }}</a></li>
+{% endfor %}
+</ul>
+</div>

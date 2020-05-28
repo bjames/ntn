@@ -3,7 +3,7 @@ title: A Power User's Guide to the Linux CLI
 category:
 - Cheatsheets
 - Linux
-published: 2019-10-10
+publication_date: 2019-10-10
 update_interval: weekly
 author: Brandon James
 summary: At first, I was using Linux because I'm a nerd and that's what we do, but I continue to use it because it increase my productivity. 
