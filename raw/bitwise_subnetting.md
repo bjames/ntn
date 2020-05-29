@@ -5,8 +5,10 @@ category:
 - Route/Switch
 - Programming
 author: Brandon James
-summary: I wrote a simple subnet calculator in C. Here are my takeaways from the process and some information on how it works. 
 ---
+
+# Bitwise Operations and Subnetting
+
 Back in September of 2016 I wrote a [subnet calculator in C](https://github.com/bjames/subnet) and then blogged about it. This entry is based on that old blog post.
 
 ## Converting To and From Dotted Decimal Notation

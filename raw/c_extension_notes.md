@@ -4,8 +4,9 @@ publication_date:
 category:
 - Programming
 author: Brandon James
-summary: 
 ---
+
+# Extending C with Python - Preliminaries
 
 I've been meaning to revist C for a while now. I think having a compiled language in my toolbox is important. As someone who mostly programs in Python, C makes a lot of sense because you can write Python modules using C. This is something you might need to do if you are doing anything computationally intensive and only if it's absolutely necessary. Python is generally fast enough and premature optimization often leads to bugs and difficult to maintain code.  
 
@@ -21,8 +22,6 @@ Before we start talking about creating Python modules in C, let's do a brief ove
 void main(){
 
     printf("Hello, World!\n");
-
-11111111111111111111111111111111111111111111111111111111111111111111111111111111
 
 }
 ```

@@ -51,6 +51,14 @@ a {
     font-size: small;
 }
 
+.note_preview_summary {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
 a :visited {
     color: rgb(10, 121, 212)
 }
