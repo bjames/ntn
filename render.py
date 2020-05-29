@@ -1,5 +1,6 @@
 import pypandoc
 import os
+import re
 
 from config import RENDERER_CONFIG
 from yaml import safe_load
@@ -10,6 +11,10 @@ input_directory = os.fspath(RENDERER_CONFIG["input_directory"])
 output_directory = os.fspath(RENDERER_CONFIG["output_directory"])
 
 def get_metadata(file_path: str) -> dict:
+
+    not_blank = re.compile(r"\S+")
+    heading = re.compile(r"^#.+")
+    html = re.compile(r"<.+>")
 
     with open(file_path) as markdown_file:
 
@@ -24,13 +29,23 @@ def get_metadata(file_path: str) -> dict:
 
                 if meta_delimiter_count > 1:
 
-                    break
+                    parsed_metadata = safe_load(metadata)
+
+                    if "summary" in parsed_metadata:
+
+                        return parsed_metadata
             
             elif meta_delimiter_count > 0:
 
-                metadata += line
+                if meta_delimiter_count < 2:
 
-    return(safe_load(metadata))
+                    metadata += line
+
+                elif not_blank.search(line) and not heading.search(line) and not html.search(line):
+
+                    parsed_metadata["summary"] = line
+
+                    return parsed_metadata
 
 
 
