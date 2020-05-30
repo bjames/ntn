@@ -1,7 +1,7 @@
 ---
 title: Bootstrap Router Hash Function
 publication_date: 2019-12-06
-category:
+tags:
 - Route/Switch
 - Programming
 author: Brandon James

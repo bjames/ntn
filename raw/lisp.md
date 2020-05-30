@@ -1,6 +1,6 @@
 ---
 title: Locator/ID Separation Protocol - LISP
-category:
+tags:
 - Route/Switch
 publication_date: 2019-09-04
 author: Brandon James

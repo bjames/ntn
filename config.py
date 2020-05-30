@@ -5,7 +5,9 @@ RENDERER_CONFIG = {
     "pandoc_extra_args": ["--toc"],
 }
 NOTES_DIR = "notes"
-SITE_NAME = "Notes Core"
+SITE_NAME = "Never The Network"
+HEADER_TEXT = "It's Never The Network"
+HEADER_IMAGE = "ntn_black.png"
 NAV_LINKS = [
     ["/", "Home"],
     ["/about", "About"]

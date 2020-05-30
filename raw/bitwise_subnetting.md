@@ -1,7 +1,7 @@
 ---
 title: Bitwise Operations and Subnetting
 publication_date: 2019-07-29
-category:
+tags:
 - Route/Switch
 - Programming
 author: Brandon James

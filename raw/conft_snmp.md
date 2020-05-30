@@ -1,7 +1,7 @@
 ---
 title: Conf T via SNMP
 publication_date: 2017-01-26
-category:
+tags:
 - Route/Switch
 author: Brandon James
 ---

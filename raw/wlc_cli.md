@@ -1,7 +1,7 @@
 ---
 title: WLC CLI Cheatsheet
 publication_date: 2019-07-30
-category:
+tags:
 - Wireless
 - Cheatsheets
 author: Brandon James

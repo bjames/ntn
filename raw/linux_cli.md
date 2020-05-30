@@ -1,10 +1,9 @@
 ---
 title: A Power User's Guide to the Linux CLI
-category:
+tags:
 - Cheatsheets
 - Linux
 publication_date: 2019-10-10
-update_interval: weekly
 author: Brandon James
 ---
 

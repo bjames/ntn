@@ -18,13 +18,14 @@ class Note:
         self.title = kwargs.get("title")
         self.author = kwargs.get("author")
         self.publication_date = kwargs.get("publication_date")
-        self.published = kwargs.get("published") 
-        self.category = kwargs.get("category")
+        self.published = kwargs.get("published")
         self.summary = kwargs.get("summary")
 
-        # default value provided
-        self.update_interval = kwargs.get("update_interval")
-        
+        self.tags = kwargs.get("tags")
+
+        if self.tags == None:
+            self.tags = ["unfiled"]
+
         # non-default, default value provided in config
         self.post_image = kwargs.get("post_image")
 
@@ -40,7 +41,7 @@ class Note:
             f"Title: {self.title}\n"
             f"Author: {self.author}\n"
             f"Published: {self.published}\n"
-            f"Category: {self.category}\n"
+            f"Tags: {self.tags}\n"
             f"Summary: {self.summary}\n"
             f"Update Interval: {self.update_interval}\n"
             f"Post Image: {self.post_image}\n"

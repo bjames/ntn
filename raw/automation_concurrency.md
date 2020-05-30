@@ -1,7 +1,7 @@
 ---
 title: How I Automate - Concurrency
 publication_date: 2019-08-01
-category:
+tags:
 - Automation
 - Programming
 author: Brandon James

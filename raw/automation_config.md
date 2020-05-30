@@ -1,7 +1,7 @@
 ---
 title: How I Automate - Script Configuration using YAML
 publication_date: 2019-02-17
-category:
+tags:
 - Automation
 author: Brandon James
 ---

@@ -1,3 +1,20 @@
+.header {
+    vertical-align: middle;
+    text-align: right;
+    max-width: 900px;
+    margin: auto;
+}
+
+.header img {
+    width: 175px;
+    float: left;
+}
+
+.navbar {
+    max-width: 800px;
+    margin: auto;
+}
+
 .navbar ul {
     list-style-type: none;
     margin: 0;
@@ -13,9 +30,13 @@
     color: #444;
 }
 
-body {
+.content {
     max-width: 800px;
     margin: auto;
+}
+
+body {
+
     line-height: 1.6;
     font-size: 18px;
     color: #444;
@@ -51,11 +72,15 @@ a {
     font-size: small;
 }
 
+.note_preview_subtitle a{
+    color: grey;
+}
+
 .note_preview_summary {
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-line-clamp: 3; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
 

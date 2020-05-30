@@ -13,9 +13,20 @@ app.config.from_pyfile("config.py")
 notes = render_all()
 
 @app.route("/")
-def hello():
+def index():
 
     return render_template("index.html", notes=notes)
+
+@app.route("/tags")
+def tags():
+
+    tag = request.args.get("tag")
+
+    matching_articles = [note for note in notes if tag in note.tags]
+
+    print(matching_articles)
+
+    return render_template("index.html", notes=matching_articles)
 
 @app.route(f"/{app.config['NOTES_DIR']}/<path:filename>")
 def posts(filename):

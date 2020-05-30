@@ -1,7 +1,7 @@
 ---
 title: Extending C with Python - Preliminaries
 publication_date: 
-category:
+tags:
 - Programming
 author: Brandon James
 ---

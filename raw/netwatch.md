@@ -1,7 +1,7 @@
 ---
 title: Practical Automation - Netwatch
 publication_date: 2019-09-12
-category:
+tags:
 - Automation
 - Programming
 author: Brandon James
