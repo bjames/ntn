@@ -10,12 +10,12 @@ app = Flask(__name__)
 # TODO as we get closer migrate to https://flask.palletsprojects.com/en/1.1.x/config/
 app.config.from_pyfile("config.py")
 
-notes = render_all()
+notes, tag_set = render_all()
 
 @app.route("/")
 def index():
 
-    return render_template("index.html", notes=notes)
+    return render_template("index.html", notes=notes, tag_set=tag_set)
 
 @app.route("/tags")
 def tags():
@@ -24,9 +24,7 @@ def tags():
 
     matching_articles = [note for note in notes if tag in note.tags]
 
-    print(matching_articles)
-
-    return render_template("index.html", notes=matching_articles)
+    return render_template("index.html", notes=matching_articles, tag_set=tag_set)
 
 @app.route(f"/{app.config['NOTES_DIR']}/<path:filename>")
 def posts(filename):

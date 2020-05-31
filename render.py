@@ -57,6 +57,21 @@ def get_summary_from_html(output_file):
     return ""
 
 
+def get_tags(notes):
+
+    tag_set = set()
+
+    for note in notes:
+
+        for tag in note.tags:
+
+            tag_set.add(tag)
+
+    return sorted(tag_set)
+
+
+
+
 def render_all():
 
     notes = []
@@ -86,7 +101,14 @@ def render_all():
 
             notes.append(Note(output_file, clean_filename, **metadata))
 
-    return notes
+    tag_set = get_tags(notes)
+
+    published_notes = (note for note in notes if note.publication_date is not None)
+
+    published_notes = sorted(published_notes, reverse=True,
+                    key=lambda n: n.publication_date)
+
+    return published_notes, tag_set
 
 if __name__ == "__main__":
 

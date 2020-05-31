@@ -18,13 +18,12 @@ class Note:
         self.title = kwargs.get("title")
         self.author = kwargs.get("author")
         self.publication_date = kwargs.get("publication_date")
-        self.published = kwargs.get("published")
         self.summary = kwargs.get("summary")
 
         self.tags = kwargs.get("tags")
 
         if self.tags == None:
-            self.tags = ["unfiled"]
+            self.tags = ["Unfiled"]
 
         # non-default, default value provided in config
         self.post_image = kwargs.get("post_image")
