@@ -16,8 +16,31 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <script>
+
+        function setButtonText() {
+
+            if (window.matchMedia('(prefers-color-scheme)').media == 'dark'){
+                document.getElementById("theme_toggle").innerHTML = "Day Mode"
+                document.documentElement.setAttribute('data-theme', 'dark')
+
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light')
+                document.getElementById("theme_toggle").innerHTML = "Night Mode"
+            }
+        }
+        function switchTheme() {
+            if (document.documentElement.getAttribute('data-theme') == 'light') {
+                document.documentElement.setAttribute('data-theme', 'dark')
+                document.getElementById("theme_toggle").innerHTML = "Day Mode"
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light')
+                document.getElementById("theme_toggle").innerHTML = "Night Mode"
+            }
+    }
+    </script>
 </head>
-<body>
+<body onload="setButtonText()">
 <div class=page>
 {% include "header.html" %}
 <div class=content>
