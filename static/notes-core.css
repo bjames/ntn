@@ -25,9 +25,20 @@
        --text-color: #ccc;
        --link-color: #6a9ce7;
        --secondary-text-color: #9b9b9b;
+       --logo-filter: invert(100%);
+       --toggle-background-color: #fff;
+       --toggle-text-color: #444;
    }
 
 }
+
+@media (inverted-colors: inverted) {
+    img,
+    video {
+      filter: invert(100%);
+    }
+  }
+  
 
 #theme_toggle, #theme_toggle:active, #theme_toggle:focus {
     float: right;

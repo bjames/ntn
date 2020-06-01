@@ -21,27 +21,27 @@
         function setButtonText() {
 
             if (window.matchMedia('(prefers-color-scheme)').media == 'dark'){
-                document.getElementById("theme_toggle").innerHTML = "Day Mode"
+                document.getElementById("theme_toggle").innerHTML = "Light 🌞"
                 document.documentElement.setAttribute('data-theme', 'dark')
 
             } else {
                 document.documentElement.setAttribute('data-theme', 'light')
-                document.getElementById("theme_toggle").innerHTML = "Night Mode"
+                document.getElementById("theme_toggle").innerHTML = "Dark 🌜"
             }
         }
         function switchTheme() {
             if (document.documentElement.getAttribute('data-theme') == 'light') {
                 document.documentElement.setAttribute('data-theme', 'dark')
-                document.getElementById("theme_toggle").innerHTML = "Day Mode"
+                document.getElementById("theme_toggle").innerHTML = "Light 🌞"
             } else {
                 document.documentElement.setAttribute('data-theme', 'light')
-                document.getElementById("theme_toggle").innerHTML = "Night Mode"
+                document.getElementById("theme_toggle").innerHTML = "Dark 🌜"
             }
     }
     </script>
 </head>
 <body onload="setButtonText()">
-    <button id="theme_toggle" onclick="switchTheme()">Night Mode</button>
+    <button id="theme_toggle" onclick="switchTheme()">Dark</button>
 <div class=page>
 {% include "header.html" %}
 <div class=content>
