@@ -18,29 +18,49 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
     <script>
 
-        function setButtonText() {
+        // based on:
+        // https://stackoverflow.com/questions/56300132/how-to-over-ride-css-prefers-color-scheme-setting
+        function detectColorScheme(){
+            var theme="light";    //default to light
+            document.getElementById("theme_toggle").style.display = "" // make visible only if js is enabled
 
-            if (window.matchMedia('(prefers-color-scheme)').media == 'dark'){
+            //local storage is used to override OS theme settings
+            if(localStorage.getItem("theme")){
+                if(localStorage.getItem("theme") == "dark"){
+                    var theme = "dark";
+                }
+            } else if(!window.matchMedia) {
+                //matchMedia method not supported
+                return false;
+            } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                //OS theme setting detected as dark
+                var theme = "dark";
+            }
+
+            //dark theme preferred, set document with a `data-theme` attribute
+            if (theme=="dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
                 document.getElementById("theme_toggle").innerHTML = "Light 🌞"
-                document.documentElement.setAttribute('data-theme', 'dark')
             } else {
-                document.documentElement.setAttribute('data-theme', 'light')
-                document.getElementById("theme_toggle").innerHTML = "Dark 🌜"
+                document.documentElement.setAttribute("data-theme", "light"); 
             }
         }
+
         function switchTheme() {
             if (document.documentElement.getAttribute('data-theme') == 'light') {
+                localStorage.setItem('theme', 'dark');
                 document.documentElement.setAttribute('data-theme', 'dark')
                 document.getElementById("theme_toggle").innerHTML = "Light 🌞"
             } else {
+                localStorage.setItem('theme', 'light');
                 document.documentElement.setAttribute('data-theme', 'light')
                 document.getElementById("theme_toggle").innerHTML = "Dark 🌜"
             }
     }
     </script>
 </head>
-<body onload="setButtonText()">
-    <button id="theme_toggle" onclick="switchTheme()">Dark 🌜</button>
+<body onload="detectColorScheme()">
+    <button id="theme_toggle" style="display: none" onclick="switchTheme()">Dark 🌜</button>
 <div class=page>
 {% include "header.html" %}
 <div class=content>
