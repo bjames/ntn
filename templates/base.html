@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
-    <script>
+    <script type="module">
 
         // based on:
         // https://stackoverflow.com/questions/56300132/how-to-over-ride-css-prefers-color-scheme-setting
@@ -56,15 +56,14 @@
                 document.documentElement.setAttribute('data-theme', 'light')
                 document.getElementById("theme_toggle").innerHTML = "Dark 🌜"
             }
-    }
+        }
+        detectColorScheme()
     </script>
 </head>
-<body onload="detectColorScheme()">
-    <button id="theme_toggle" style="display: none" onclick="switchTheme()">Dark 🌜</button>
+<body>
 <div class=page>
-{% include "header.html" %}
-<div class=content>
 {% include "nav.html" %}
+<div class=content>
 {% block content %}{% endblock %}
 {% include "footer.html" %}
 </div>

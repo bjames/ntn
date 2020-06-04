@@ -8,6 +8,8 @@ author: Brandon James
 summary: RFC 7761 describes a hash function used to load balance multicast groups between Rendezvous Point (RP) candidates when you are using Bootstrap Router (BSR). The hash function isn't straight forward and I was unable to find a resource that described it in detail. One feature of the hash function is an adjustable hash mask length. I think it's important to understand what the function does and how adjusting the mask impacts RP selection. I do my best to describe it here and provide some resources to help you select the best hash mask length for your environment. 
 ---
 
+# Bootstrap Router Hash Function
+
 [RFC 7761](https://tools.ietf.org/html/rfc7761#section-4.7.2) describes a hash function used to load balance multicast groups between Rendezvous Point (RP) candidates when you are using Bootstrap Router (BSR). The hash function isn't straight forward and I was unable to find a resource that described it in detail. One feature of the hash function is an adjustable hash mask length. I think it's important to understand what the function does and how adjusting the mask impacts RP selection. I do my best to describe it here and provide some resources to help you select the best hash mask length for your environment.   
 
 ## The Hash Function

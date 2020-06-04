@@ -1,7 +1,15 @@
 <div class=navbar>
-<ul>
-{% for link in config.NAV_LINKS %}
-<li><a href={{ link[0] }}>{{ link[1] }}</a></li>
-{% endfor %}
-</ul>
+    <div class=navcontainer>
+        <a href="/">
+            <img src="/static/images/{{ config.HEADER_IMAGE }}" alt="logo">
+        </a>
+        <div class=nav_links>
+            <ul>
+                {% for link in config.NAV_LINKS %}
+                <li><a href={{ link[0] }}>{{ link[1] }}</a></li>
+                {% endfor %}
+                <li><button id="theme_toggle" style="display: none" onclick="switchTheme()">Dark 🌜</button></li>
+            </ul>
+        </div>
+    </div>
 </div>

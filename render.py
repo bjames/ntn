@@ -2,6 +2,7 @@ import pypandoc
 import os
 import re
 
+from pathlib import Path
 from config import RENDERER_CONFIG
 from yaml import safe_load
 
@@ -9,6 +10,7 @@ from notes import Note
 
 input_directory = os.fspath(RENDERER_CONFIG["input_directory"])
 output_directory = os.fspath(RENDERER_CONFIG["output_directory"])
+
 
 def get_metadata(file_path: str) -> dict:
 
@@ -75,6 +77,8 @@ def get_tags(notes):
 def render_all():
 
     notes = []
+
+    Path(output_directory).mkdir(parents=True, exist_ok=True)
 
     for file in os.listdir(input_directory):
 

@@ -1,7 +1,10 @@
+import os
+
+SCRIPT_PATH = f"{os.path.split(os.path.abspath(__file__))[0]}"
 RENDERER_CONFIG = {
-    "input_directory": "./raw/",
+    "input_directory": f"{SCRIPT_PATH}/raw/",
     "input_file_extensions": (".md"),
-    "output_directory": "./rendered/",
+    "output_directory": f"{SCRIPT_PATH}/static/rendered/",
     "pandoc_extra_args": ["--toc"],
 }
 NOTES_DIR = "notes"
