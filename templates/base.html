@@ -45,6 +45,9 @@
                 document.documentElement.setAttribute("data-theme", "light"); 
             }
         }
+        detectColorScheme()
+    </script>
+    <script>
 
         function switchTheme() {
             if (document.documentElement.getAttribute('data-theme') == 'light') {
@@ -57,7 +60,6 @@
                 document.getElementById("theme_toggle").innerHTML = "Dark 🌜"
             }
         }
-        detectColorScheme()
     </script>
 </head>
 <body>
