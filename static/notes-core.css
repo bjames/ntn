@@ -86,7 +86,7 @@ button::-moz-focus-inner {
 .content {
     max-width: 800px;
     margin: auto;
-    padding-top: 50px;
+    padding-top: 60px;
 }
 
 body {
@@ -142,6 +142,15 @@ a {
     display: -webkit-box;
     -webkit-line-clamp: 3; /* number of lines to show */
     -webkit-box-orient: vertical;
+}
+
+.note_title_block h1 {
+    line-height: 1;
+}
+
+.note_subtitle {
+    text-align: center;
+    font-size: 12px;
 }
 
 .footer {

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block body_class %}note{% endblock %}
+{% block content %}
+{{ url_for('static', filename=filename) }}
+{% endblock %}

@@ -28,11 +28,6 @@ class Note:
         # non-default, default value provided in config
         self.post_image = kwargs.get("post_image")
 
-    def __init_note_from_file(self):
-
-        """ returns note attributes from parsing metadata in file """
-        pass
-
     def __str__(self):
 
         return( 

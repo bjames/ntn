@@ -6,8 +6,6 @@ tags:
 author: Brandon James
 ---
 
-# How I Automate - Script Configuration using YAML
-
 In the past when I was using TCL/Expect as my primary automation language, I would do most of my configuration within the script itself and then I'd just have the script grab a list of devices from a text document. Lately, I've been using YAML to provide both my list of devices and to configure various parameters within the script itself. 
 
 ### The YAML file

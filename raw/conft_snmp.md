@@ -6,8 +6,6 @@ tags:
 author: Brandon James
 ---
 
-# Conf T via SNMP
-
 Lately we've been hitting bugs that cause switches (specifically Cisco 4500-E's) to lose their SSH keys after reboots or crashes. Due to this we've changed our standard operating procedure for reboots to include enabling telnet. This workaround is great during planned outages, but it doesn't really help in the case of unplanned outages. I knew that it was possible to make configuration changes via SNMP, so today when I replaced a lab router and forgot to generate SSH keys, I took advantage of the situation and generated the keys via SNMP.
 
 To do this, you'll need the following:

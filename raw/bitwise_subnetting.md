@@ -7,8 +7,6 @@ tags:
 author: Brandon James
 ---
 
-# Bitwise Operations and Subnetting
-
 Back in September of 2016 I wrote a [subnet calculator in C](https://github.com/bjames/subnet) and then blogged about it. This entry is based on that old blog post.
 
 ## Converting To and From Dotted Decimal Notation

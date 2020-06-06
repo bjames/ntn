@@ -7,8 +7,6 @@ tags:
 author: Brandon James
 ---
 
-# Practical Automation - Netwatch
-
 Small data gathering utilities are one of my favorite forms of automation. They provide immediate value and have no risk of failure. Netwatch runs a set of commands periodically against a group of network devices. It features concurrency, error handling and just the right amount of customization. Netwatch was inspired by a [post on Reddit](https://www.reddit.com/r/Cisco/comments/d2ndqq/dump_switch_commands_to_a_file_on_a_schedule/) and the *nix utility `watch`. 
 
 If you want to skip the fluff and get right to the code, you can clone my repo on [github](https://github.com/bjames/netwatch).

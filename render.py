@@ -76,7 +76,8 @@ def get_tags(notes):
 
 def render_all():
 
-    notes = []
+    notes = set()
+    static_pages = set()
 
     Path(output_directory).mkdir(parents=True, exist_ok=True)
 
@@ -103,7 +104,16 @@ def render_all():
 
                 metadata["summary"] = get_summary_from_html(output_file)
 
-            notes.append(Note(output_file, clean_filename, **metadata))
+
+            if "static_url" in metadata:
+
+                static_pages.add(
+                    Note(output_file, clean_filename, **metadata)
+                )
+
+            else:
+
+                notes.add(Note(output_file, clean_filename, **metadata))
 
     tag_set = get_tags(notes)
 
@@ -112,7 +122,7 @@ def render_all():
     published_notes = sorted(published_notes, reverse=True,
                     key=lambda n: n.publication_date)
 
-    return published_notes, tag_set
+    return published_notes, tag_set, static_pages
 
 if __name__ == "__main__":
 

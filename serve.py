@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, request
+from flask import Flask, render_template, send_from_directory, request, abort
 from render import render_all
 
 from datetime import datetime
@@ -10,7 +10,7 @@ app = Flask(__name__)
 # TODO as we get closer migrate to https://flask.palletsprojects.com/en/1.1.x/config/
 app.config.from_pyfile("config.py")
 
-notes, tag_set = render_all()
+notes, tag_set, static_pages = render_all()
 
 @app.route("/")
 def index():
@@ -29,14 +29,40 @@ def tags():
 @app.route(f"/{app.config['NOTES_DIR']}/<path:filename>")
 def posts(filename):
 
-    return render_template("note.html", filename=filename)
+    for note in notes:
 
-# This leads to HTTP 500s consider moving
+        if note.filename == filename:
+
+            return render_template("note.html", filename=filename, note=note)
+
+    else:
+
+        abort(404)
+
+@app.route("/<filename>")
+def static_page(filename):
+
+    if filename in [page.filename for page in static_pages]:
+
+        return render_template("note.html", filename=filename)
+
+    else:
+
+        abort(404)
+
 @app.template_global()
 def rendered(filename):
+
     fullpath = os.path.join(app.config["RENDERER_CONFIG"]["output_directory"], f"{filename}.html")
-    with open(fullpath, 'r') as f:
-        return f.read()
+
+    try:
+
+        with open(fullpath, 'r') as f:
+            return f.read()
+
+    except FileNotFoundError:
+
+        abort(404)
 
 @app.context_processor
 def inject_now():

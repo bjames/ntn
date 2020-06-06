@@ -7,8 +7,6 @@ tags:
 author: Brandon James
 ---
 
-# How I Automate - Concurrency
-
 Interacting with Network Devices can often be I/O limited. A function runs, waits for a response from the device, then another function runs so on and so forth. This is made worse by the fact that scripts are often run against multiple devices. After all the purpose of scripting is to speed up repetitive tasks. 
 
 One of the scripts I maintain is used to test the POTS lines my enterprise uses for out-of-band connectivity at our branches and call centers. Dial-up modems are slow, you make a call, the line rings, remote end picks up, the modems eventually train up and you finally get a connection. With some of our international locations I've seen this process take nearly a full minute. Before I added multiprocessing, this script could take over 2 hours to complete. Now it finishes in roughly 20 minutes.
