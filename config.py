@@ -17,3 +17,4 @@ NAV_LINKS = [
     ["/about", "About"],
 ]
 STYLESHEET = "notes-core.css"
+URI = "neverthenetwork.com"

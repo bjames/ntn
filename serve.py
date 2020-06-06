@@ -64,6 +64,11 @@ def rendered(filename):
 
         abort(404)
 
+@app.route('/sitemap.xml')
+def sitemap():
+
+    return render_template('sitemap.xml', notes = notes)
+
 @app.context_processor
 def inject_now():
     return {'now': datetime.utcnow(),

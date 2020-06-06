@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Generated at first request -->
+    <url>
+        <loc>https://{{ config.URI }}/</loc>
+        <changefreq>daily</changefreq>
+    </url>
+    {% for note in notes %}
+    <url>
+        <loc>https://{{ config.URI }}/{{ config.NOTES_DIR }}/{{ note.filename }}</loc>
+        <lastmod>{% if note.modified %}{{ note.modified }}{% else %}{{ note.publication_date }}{% endif %}</lastmod>
+        <changefreq>{% if note.update_interval %}{{ note.update_interval }}{% else %}monthly{% endif %}</changefreq>
+    </url>
+    {% endfor %}
+    <!-- End Generated Content -->
+    
+</urlset>
