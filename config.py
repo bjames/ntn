@@ -3,7 +3,7 @@ import os
 SCRIPT_PATH = f"{os.path.split(os.path.abspath(__file__))[0]}"
 RENDERER_CONFIG = {
     "input_directory": f"{SCRIPT_PATH}/raw/",
-    "input_file_extensions": (".md"),
+    "input_file_extensions": (".md", ".markdown"),
     "output_directory": f"{SCRIPT_PATH}/static/rendered/",
     "pandoc_extra_args": ["--toc"],
 }

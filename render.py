@@ -84,7 +84,7 @@ def render_all():
     for file in os.listdir(input_directory):
 
         filename = os.fsdecode(file)
-        clean_filename = filename.strip(RENDERER_CONFIG["input_file_extensions"])
+        clean_filename = os.path.splitext(filename)[0]
         file_path = f"{input_directory}{filename}"
 
         if filename.endswith(RENDERER_CONFIG["input_file_extensions"]):
