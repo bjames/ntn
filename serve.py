@@ -69,6 +69,20 @@ def sitemap():
 
     return render_template('sitemap.xml', notes = notes)
 
+@app.route('/robots.txt')
+def robots():
+
+    if app.config["PRODUCTION"]:
+
+        return render_template("robots.txt")
+
+    else:
+
+        return(
+            "User-agent: *\n"
+            "Disallow: /"
+        )
+
 @app.context_processor
 def inject_now():
     return {'now': datetime.utcnow(),
