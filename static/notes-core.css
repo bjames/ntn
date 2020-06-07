@@ -151,6 +151,14 @@ a {
     font-size: 12px;
 }
 
+.note_content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
+    display: block; 
+    content: " "; 
+     height: 60px;      /* Give height of your fixed element */
+       margin-top: -60px; /* Give negative margin of your fixed element */  	
+       visibility: hidden; 
+}
+
 .footer {
     border-top: 1px solid;
     text-align: center;
@@ -168,7 +176,7 @@ a {
     background-color: var(--background-color) !important;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1000px) {
 
     .content {
         margin-top: 100px;

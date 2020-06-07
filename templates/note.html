@@ -7,5 +7,7 @@
     <p class="note_subtitle">By {{ note.author }} on {{ note.publication_date }}</p>
 </div>
 {% endif %}
+<div class="note_content">
 {{ rendered(filename) | safe }}
+</div>
 {% endblock %}
