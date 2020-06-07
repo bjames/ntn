@@ -5,7 +5,7 @@ RENDERER_CONFIG = {
     "input_directory": f"{SCRIPT_PATH}/raw/",
     "input_file_extensions": (".md", ".markdown"),
     "output_directory": f"{SCRIPT_PATH}/static/rendered/",
-    "pandoc_extra_args": ["--toc"],
+    "pandoc_extra_args": [],
 }
 NOTES_DIR = "notes"
 SITE_NAME = "Never The Network"

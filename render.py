@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from config import RENDERER_CONFIG
 from yaml import safe_load
+from bs4 import BeautifulSoup
 
 from notes import Note
 
@@ -72,7 +73,31 @@ def get_tags(notes):
     return sorted(tag_set)
 
 
+def add_toc(md_file, html_file):
 
+    rendered_soup = BeautifulSoup(open(html_file), "html.parser")
+
+    toc_tags = [toc_tag for toc_tag in rendered_soup.find_all("p", string="[TOC]")]
+
+    if len(toc_tags) > 0:
+
+        standalone_html = pypandoc.convert_file(
+            md_file,
+            "html5",
+            extra_args=["-s", "--toc"],
+        )
+
+        standalone_soup = BeautifulSoup(standalone_html, "html.parser")
+
+        toc = standalone_soup.find_all("nav", id="TOC")[0]
+
+        for tag in toc_tags:
+
+            tag.replaceWith(toc)
+
+        with open(html_file, "w") as html:
+
+            html.write(str(rendered_soup))
 
 def render_all():
 
@@ -97,6 +122,8 @@ def render_all():
                 outputfile=output_file,
                 extra_args=(RENDERER_CONFIG["pandoc_extra_args"])
             )
+
+            add_toc(file_path, output_file)
 
             metadata = get_metadata(file_path)
 

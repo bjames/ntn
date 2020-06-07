@@ -17,21 +17,7 @@
     --toggle-background-color: #fff;
     --toggle-text-color: #444;
 } 
-/*
-@media (prefers-color-scheme: dark) {
-    
-    :root {
-    --background-color: #333;
-    --text-color: #ccc;
-    --link-color: #6a9ce7;
-    --secondary-text-color: #9b9b9b;
-    --logo-filter: invert(100%);
-    --toggle-background-color: #fff;
-    --toggle-text-color: #444;
-    }
 
-}
-*/
 #theme_toggle, #theme_toggle:active, #theme_toggle:focus {
     background-color: var(--toggle-background-color);
     color: var(--toggle-text-color);
@@ -49,6 +35,7 @@ button::-moz-focus-inner {
 }
 
 .navbar {
+    display: flex;
     background-color: var(--background-color);
     width: 100%;
     position: fixed;
@@ -57,12 +44,13 @@ button::-moz-focus-inner {
 }
 
 .navcontainer {
-    display: flex;
-    justify-content: space-around;
+    width: 900px;
     margin: auto;
 }
 
 .navcontainer img {
+    float: left;
+    margin: auto;
     width: 175px;
     filter: var(--logo-filter);
 }
@@ -89,6 +77,12 @@ button::-moz-focus-inner {
     padding-top: 60px;
 }
 
+.content img {
+    max-width: 800px;
+    display: block;
+    margin: auto;
+}
+
 body {
     line-height: 1.6;
     font-size: 20px;
@@ -99,6 +93,10 @@ body {
 
 h1, h2, h3 {
     line-height: 1.2
+}
+
+h1 {
+    text-align: center;
 }
 
 pre {
@@ -178,8 +176,12 @@ a {
         padding: 10px;
     }
 
-    body {
-        font-size: 25px;
+    .content {
+        font-size: 2em;
+    }
+
+    .content pre {
+        font-size: 1em;
     }
 
     .navcontainer {
@@ -194,11 +196,30 @@ a {
     }
 
     .navcontainer li {
-        font-size: 2em;
+        font-size: 3em;
     }
 
     .navcontainer button {
         display: none;
+    }
+
+    .note_subtitle {
+        text-align: center;
+        font-size: 1em;
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+        :root {
+        --background-color: #333;
+        --text-color: #ccc;
+        --link-color: #6a9ce7;
+        --secondary-text-color: #9b9b9b;
+        --logo-filter: invert(100%);
+        --toggle-background-color: #fff;
+        --toggle-text-color: #444;
+        }
+
     }
 
 }

@@ -1,3 +1,4 @@
 Flask
 pypandoc
 pyyaml
+bs4

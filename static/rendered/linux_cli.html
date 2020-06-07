@@ -1,9 +1,43 @@
-<p>I am a huge fan of Linux<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In the office most of my real work happens through a Red Hat jumpbox, this website is hosted on Ubuntu and I’ve been using Linux on my personal machines since 2010<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. At first, I was using Linux because I’m a nerd and that’s what we do, but I continue to use it because it increase my productivity.</p>
+<p>I am a huge fan of Linux<a class="footnote-ref" href="#fn1" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In the office most of my real work happens through a Red Hat jumpbox, this website is hosted on Ubuntu and I’ve been using Linux on my personal machines since 2010<a class="footnote-ref" href="#fn2" id="fnref2" role="doc-noteref"><sup>2</sup></a>. At first, I was using Linux because I’m a nerd and that’s what we do, but I continue to use it because it increase my productivity.</p>
 <p>This document is meant to be act as a Linux CLI reference. I plan on expanding the document as I have time and hope it ends up being a complete reference for Linux power users.</p>
-<H1>
+<h1>
 Index
-</H1>
-<p>[TOC]</p>
+</h1>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#the-unix-philosophy">The Unix Philosophy</a></li>
+<li><a href="#defining-the-linux-cli">Defining the Linux CLI</a></li>
+<li><a href="#man-pages">Man Pages</a></li>
+<li><a href="#navigation">Navigation</a></li>
+<li><a href="#pagers">Pagers</a></li>
+<li><a href="#searching-with-grep-locate-and-which">Searching with grep, locate and which</a><ul>
+<li><a href="#grep">grep</a></li>
+<li><a href="#locate">locate</a></li>
+<li><a href="#which">which</a></li>
+</ul></li>
+<li><a href="#ssh">SSH</a><ul>
+<li><a href="#logging-ssh-sessions">Logging SSH Sessions</a></li>
+<li><a href="#the-known-hosts-file">The Known Hosts File</a></li>
+<li><a href="#ssh-configuration-file">SSH Configuration File</a></li>
+<li><a href="#ssh-arguments">SSH Arguments</a></li>
+<li><a href="#ssh-keys">SSH Keys</a></li>
+</ul></li>
+<li><a href="#vim">Vim</a><ul>
+<li><a href="#normal-mode-commands">Normal Mode Commands</a></li>
+<li><a href="#insert-mode">Insert Mode</a></li>
+</ul></li>
+<li><a href="#job-management">Job Management</a><ul>
+<li><a href="#finding-jobs-and-processes">Finding Jobs and Processes</a></li>
+<li><a href="#stopping-jobs-and-processes">Stopping Jobs and Processes</a></li>
+<li><a href="#switching-between-jobs">Switching Between Jobs</a></li>
+</ul></li>
+<li><a href="#io-redirection">IO Redirection</a><ul>
+<li><a href="#standard-streams">Standard Streams</a></li>
+<li><a href="#redirection-operators">Redirection Operators</a></li>
+</ul></li>
+<li><a href="#queue">Queue</a></li>
+</ul>
+</nav>
 <h2 id="the-unix-philosophy">The Unix Philosophy</h2>
 <p>Linux falls under the “Unix-like” class of operating systems, all of these operating systems follow something known as the Unix Philosophy. The Unix Philosophy has a long and somewhat storied history that you can read about in the first Chapter of <a href="http://www.catb.org/~esr/writings/taoup/html/ch01s06.html"><em>The Art of Unix Programming</em> by Eric Steven Raymond</a>. While the book is geared towards programmers, understanding the Unix philosophy is sure to make you a better user of Linux as well.</p>
 <p>I think of the following quote from <a href="https://archive.org/details/bstj57-6-1899/page/n3">Doug McIlroy</a> when I think of the Unix Philosophy:</p>
@@ -15,7 +49,7 @@ Index
 </ol>
 <p>As a Linux user, it’s important to keep the first two in mind. Realizing that the Linux CLI consists of a collection of small programs that can act as input to each other and all follow a similar output format is the first step to Linux mastery. If you search for ‘bash one-liners’ you will find long strings of text that can be difficult to decipher. Once you realize that you are actually looking at multiple commands being chained together you can (usually) make sense of how the ‘one-liner’ works.</p>
 <h2 id="defining-the-linux-cli">Defining the Linux CLI</h2>
-<p>Since Linux can vary from distribution to distribution, I think it’s important to define what I’m talking about when I say “the Linux CLI”. The Linux CLI consists of a POSIX compliant shell and a set of text-based utilities. There are certain utilities you can expect to be available by default, but we don’t really have a standard for this<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Unless otherwise noted, any programs or commands that I mention should be available by default on most Linux distributions, but I’d be hesitant to guarantee that they’ll be available on <em>all</em> Linux distributions.</p>
+<p>Since Linux can vary from distribution to distribution, I think it’s important to define what I’m talking about when I say “the Linux CLI”. The Linux CLI consists of a POSIX compliant shell and a set of text-based utilities. There are certain utilities you can expect to be available by default, but we don’t really have a standard for this<a class="footnote-ref" href="#fn3" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Unless otherwise noted, any programs or commands that I mention should be available by default on most Linux distributions, but I’d be hesitant to guarantee that they’ll be available on <em>all</em> Linux distributions.</p>
 <p><strong>Note:</strong> In this document I will use the terms <strong>Linux CLI</strong>, <strong>bash</strong> and <strong>shell</strong> interchangeably. If there is a standard Linux shell, it’s bash, but some Linux distributions do ship with alternative shells such as ksh, fish or zsh.</p>
 <h2 id="man-pages">Man Pages</h2>
 <p>Most Linux CLI commands and programs have listings in the system manual. To view a man page, simply type <code>man &lt;command&gt;</code> where command is the name of the command or program you want to know more about. The <code>man</code> program itself even has a man page, type <code>man man</code> to try it out. If for some reason you can’t find the <code>man</code> page you are looking for you can use <code>man -k &lt;keyword&gt;</code> to get a list of <code>man</code> pages containing a specific keyword. You can also perform a basic search within a man page by typing <code>/&lt;keyword&gt;</code> and then using <code>n</code> to jump to the next result or <code>N</code> to jump to the previous result. For more advance searches, you can pipe <code>man</code> into [<code>grep -n</code>].</p>
@@ -50,8 +84,8 @@ total 183M
 drwxr-xr-x.  8 bjames bjames 4.0K Sep  8 17:24  .
 drwx------. 36 bjames bjames 4.0K Sep  8 17:23  ..
 drwxrwxr-x.  2 bjames bjames 4.0K Jul 12 13:51  ACI
--rw-------.  1 bjames bjames 230K Sep  7 00:10 &#39;LISP - edit.aup&#39;
-drwxrwxr-x.  3 bjames bjames 4.0K Sep  4 21:20 &#39;LISP - edit_data&#39;
+-rw-------.  1 bjames bjames 230K Sep  7 00:10 'LISP - edit.aup'
+drwxrwxr-x.  3 bjames bjames 4.0K Sep  4 21:20 'LISP - edit_data'
 -rw-rw-r--.  1 bjames bjames  12M Sep  4 23:42  LISP.mp3
 drwxrwxr-x. 12 bjames bjames 4.0K Aug 18 16:27  notes
 -rw-rw-r--.  1 bjames bjames  53M Sep  5 15:45  output2.mkv
@@ -108,7 +142,7 @@ neverthenetwork</code></pre>
 <h2 id="pagers">Pagers</h2>
 <p>If you’ve read many linux guides, you’ve probably seen someone use <code>cat file.txt</code> to print the content of a file to the screen. This does work, but there is a much better solution. <code>more</code> and <code>less</code> both belong to a class of programs known as pagers. Pagers work by breaking files into pages or screenfuls of data so you don’t need to scroll back up to see the rest of your file. The two programs operate similarly, but do have a few differences.</p>
 <ul>
-<li><code>less</code> - Operates similarly to <code>vi</code> and allows forward and backward movement through the file. The output of the file is not copied to your scrollback buffer<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.
+<li><code>less</code> - Operates similarly to <code>vi</code> and allows forward and backward movement through the file. The output of the file is not copied to your scrollback buffer<a class="footnote-ref" href="#fn4" id="fnref4" role="doc-noteref"><sup>4</sup></a>.
 <ul>
 <li>Basic navigation <code>[space]</code> - Move forward one screenful, <code>j</code> move forward one line, <code>k</code> move backward one line, <code>q</code> quit</li>
 <li>The pager used by <code>man</code> operates similarly to less</li>
@@ -124,10 +158,10 @@ neverthenetwork</code></pre>
 <h2 id="searching-with-grep-locate-and-which">Searching with grep, locate and which</h2>
 <h3 id="grep">grep</h3>
 <p><code>grep</code> is used to find strings matching a pattern within a file. In the most basic case, you might use <code>grep</code> to search for a specific string within a file:</p>
-<pre><code>[bjames@lwks1 pages]$ grep &quot;specific string&quot; linux_cli.md
+<pre><code>[bjames@lwks1 pages]$ grep "specific string" linux_cli.md
 Grep is used to find strings matching a pattern within a file. In the most basic case, you might use grep to search for a specific string within a file:</code></pre>
 <p>However, the real power of <code>grep</code> lies in regular expressions. Current versions of <code>grep</code> support three <em>flavors</em> of regex. They are standard <code>grep</code> regex, extended <code>grep</code> regex and perl regex. I find myself using extended <code>grep</code> for most things. In the below example, we use extended regular expressions to find IP addresses within this markdown file.</p>
-<pre><code>[bjames@lwks1 pages]$ grep -noE &#39;[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}&#39; linux_cli.md
+<pre><code>[bjames@lwks1 pages]$ grep -noE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' linux_cli.md
 193:172.16.12.1
 194:172.16.12.127
 194:172.16.12.130
@@ -137,7 +171,7 @@ Grep is used to find strings matching a pattern within a file. In the most basic
 876:192.168.88.1</code></pre>
 <p><strong>Note:</strong> in the above output, I also included the <code>-n</code> argument, this tells <code>grep</code> to print the line number the match was found on. I also used the <code>-o</code> argument, which tells grep we want only the matching part of the line. Also note the regex above won’t only find valid IPs, for instance 999.999.999.999 is not a valid IP, but would be considered a match. The regex to only match valid IPs is significantly more complicated. When using <code>grep</code> it’s generally best to use regex that’s good enough to find what you are looking for.</p>
 <p>In addition to searching a single file, <code>grep</code> can be used to search multiple files using either a wildcard such as <code>grep &lt;pattern&gt; *.log</code>, a single directory <code>grep &lt;pattern&gt; ~/logs/</code> or a directory and it’s subdirectories <code>grep -r &lt;pattern&gt; ~/logs/</code> (here the <code>-r</code> argument stands for recursive).</p>
-<pre><code>[bjames@lwks1 pages]$ grep -Eo &#39;[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}&#39; *.md
+<pre><code>[bjames@lwks1 pages]$ grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' *.md
 automation_concurrency.md:192.168.1.100
 automation_concurrency.md:192.168.10.0
 &lt;redacted for brevity&gt;
@@ -167,16 +201,16 @@ wlc_cli.md:192.168.1.20</code></pre>
 <h3 id="which">which</h3>
 <p><code>which</code> returns the path of a shell command. This is especially useful for user installed programs and aliases.</p>
 <pre><code>[bjames@lwks1 pages]$ which ll
-alias ll=&#39;ls -l --color=auto&#39;
+alias ll='ls -l --color=auto'
     /usr/bin/ls</code></pre>
 <h2 id="ssh">SSH</h2>
-<p>Linux has a built in SSH client, called OpenSSH<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Basic usage is very simple.</p>
+<p>Linux has a built in SSH client, called OpenSSH<a class="footnote-ref" href="#fn5" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Basic usage is very simple.</p>
 <pre><code>[bjames@lwks1 ~]$ ssh labtoolbox
-bjames@labtoolbox&#39;s password: 
+bjames@labtoolbox's password: 
 bjames@labtoolbox:~$ </code></pre>
 <p>You can also specify a username</p>
 <pre><code>[bjames@lwks1 ~]$ ssh root@labtoolbox
-root@labtoolbox&#39;s password: 
+root@labtoolbox's password: 
 root@labtoolbox:~$ </code></pre>
 <p><strong>Usability Tip</strong> most Linux distributions ship with a program called bash-completion installed. If it’s installed you can use tab-completion to fill in the hostname based on your known-hosts and ssh-config files. If there are multiple matches it will print out a list of matching hosts. This can be useful if you are having trouble remembering an IP or hostname.</p>
 <pre><code>[bjames@lwks1 ~]$ ssh 172.16.12.1
@@ -189,11 +223,11 @@ root@labtoolbox:~$ </code></pre>
 <h3 id="the-known-hosts-file">The Known Hosts File</h3>
 <p>The first time you log into a device you’ll be prompted to add it’s RSA key to the known hosts file.</p>
 <pre><code>[bjames@lwks1 ~]$ ssh 192.168.88.1
-The authenticity of host &#39;192.168.88.1 (192.168.88.1)&#39; can&#39;t be established.
+The authenticity of host '192.168.88.1 (192.168.88.1)' can't be established.
 RSA key fingerprint is SHA256:tXxQqN842Uoe/35JLTOOllo5liFu3qOERiid54iIW1Y.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added &#39;192.168.88.1&#39; (RSA) to the list of known hosts.
-bjames@192.168.88.1&#39;s password: </code></pre>
+Warning: Permanently added '192.168.88.1' (RSA) to the list of known hosts.
+bjames@192.168.88.1's password: </code></pre>
 <p>If the key changes, you’ll be presented with an error message.</p>
 <pre><code>[bjames@lwks1 ~]$ ssh 192.168.88.1
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -246,7 +280,7 @@ Your identification has been saved in test_key.
 Your public key has been saved in test_key.pub.
 The key fingerprint is:
 SHA256:F/hmGkdfO1F+S1fm8cVtJAKHiI7sOQFpAEONwvZjZ5Y bjames@lwks1
-The key&#39;s randomart image is:
+The key's randomart image is:
 +---[RSA 3072]----+
 |Boo.   . ..oo .+B|
 |.=+.  . .... . *O|
@@ -262,19 +296,19 @@ The key&#39;s randomart image is:
 <p><code>ssh-keygen</code> generates two files <code>&lt;key_name&gt;</code> and <code>&lt;key_name&gt;.pub</code>. Once you’ve generated an SSH key pair, you need to copy the public key, <code>&lt;key_name&gt;.pub</code> to the systems you need to authenticate against.</p>
 <p><strong>Note:</strong> In practice, you’ll probably want to use default of <code>~/.ssh/id_rsa</code></p>
 <pre><code>[bjames@lwks1 ~]$ ssh-copy-id -i test_key.pub test.neverthenetwork.com
-/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: &quot;test_key.pub&quot;
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "test_key.pub"
 /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
 /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
-bjames@test.neverthenetwork.com&#39;s password: 
+bjames@test.neverthenetwork.com's password: 
 
 Number of key(s) added: 1
 
-Now try logging into the machine, with:   &quot;ssh &#39;test.neverthenetwork.com&#39;&quot;
+Now try logging into the machine, with:   "ssh 'test.neverthenetwork.com'"
 and check to make sure that only the key(s) you wanted were added.</code></pre>
 <p>This program works by copying your <code>&lt;key_name&gt;.pub</code> to <code>~/.ssh/authorized_keys</code>. Which can be done manually from systems that don’t have <code>ssh-copy-id</code> installed. In addition, this might not work on non-unix-like systems. In which case you’ll need to copy the contents of <code>&lt;key_name&gt;.pub</code> to the authorized key store manually.</p>
 <p>Once the key has been copied, you can log in to the remote system by specifying the identity file using <code>ssh -i</code> or by modifying your ssh configuration to always use a specific identity file for one or every host.</p>
 <pre><code>[bjames@lwks1 ~]$ ssh -i test_key test.neverthenetwork.com 
-Enter passphrase for key &#39;test_key&#39;: 
+Enter passphrase for key 'test_key': 
 Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-55-generic x86_64)
 
 bjames@test:~$ </code></pre>
@@ -354,7 +388,7 @@ MiB Swap:  32280.0 total,  32280.0 free,      0.0 used.  60759.1 avail Mem
 13769 bjames    20   0  674600  65880  40592 S   2.0   0.1   0:04.11 terminator </code></pre>
 <p><strong>Note:</strong> By default, <code>top</code> sorts by CPU utilization. Pressing <code>f</code> brings up a menu that allows you to select a different column to sort by.</p>
 <h3 id="stopping-jobs-and-processes">Stopping Jobs and Processes</h3>
-<p>To end the current job, press <code>CTRL+C</code>. This sends SIGINT<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> to the current process. SIGINT asks the process to gracefully shutdown. There may be instances where this doesn’t work, but in general it will end the process in the foreground.</p>
+<p>To end the current job, press <code>CTRL+C</code>. This sends SIGINT<a class="footnote-ref" href="#fn6" id="fnref6" role="doc-noteref"><sup>6</sup></a> to the current process. SIGINT asks the process to gracefully shutdown. There may be instances where this doesn’t work, but in general it will end the process in the foreground.</p>
 <pre><code>[bjames@lwks1 neverthenetwork]$ ping 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=54 time=9.08 ms
@@ -424,7 +458,7 @@ sudo tcpdump -w out.pcap
 <p>When a session ends, <code>SIGHUP</code> is sent to all running jobs. When <code>SIGHUP</code> is received, jobs clean up and stop. <code>nohup</code> prevents programs from receiving <code>SIGHUP</code> when you exit and it also redirects their output to <code>nohup.out</code>.</p>
 <pre><code>[bjames@lwks1 ~]$ nohup ping 8.8.8.8 &amp;
 [1] 4620
-nohup: ignoring input and appending output to &#39;nohup.out&#39;
+nohup: ignoring input and appending output to 'nohup.out'
 [bjames@lwks1 ~]$ exit</code></pre>
 <p>Later, we can look at the output by reading <code>nohup.out</code></p>
 <pre><code>[bjames@lwks1 ~]$ more nohup.out 
@@ -528,37 +562,37 @@ cat: doesntexist.txt: No such file or directory</code></pre></li>
 <pre><code>
 ### Chaining Redirection Operators
 
-* Example: Redirect domainlist.txt to `nslookup`, pipe the output into `grep` and redirect `grep`&#39;s output to result.txt</code></pre>
+* Example: Redirect domainlist.txt to `nslookup`, pipe the output into `grep` and redirect `grep`'s output to result.txt</code></pre>
 <p>[bjames@lwks1 ~]$ nslookup &lt; domainlist.txt | grep -B 2 64.68.200.46 &gt; result.txt [bjames@lwks1 ~]$ more result.txt Non-authoritative answer: Name: arista.com Address: 64.68.200.46</p>
-<pre><code>* Example: Concatenate two domain lists, `grep` the output for the word &#39;cisco&#39; and perform an `nslookup` for each result</code></pre>
+<pre><code>* Example: Concatenate two domain lists, `grep` the output for the word 'cisco' and perform an `nslookup` for each result</code></pre>
 <p>[bjames@lwks1 ~]$ cat domainlist.txt domainlist2.txt | grep cisco | nslookup Server: 192.168.88.1 Address: 192.168.88.1#53</p>
 <p>Non-authoritative answer: Name: cisco.com Address: 72.163.4.185 Name: cisco.com Address: 2001:420:1101:1::185 Server: 192.168.88.1 Address: 192.168.88.1#53</p>
 <p>Non-authoritative answer: Name: sanfrancisco.com Address: 104.27.130.254 Name: sanfrancisco.com Address: 104.27.131.254 Name: sanfrancisco.com Address: 2606:4700:30::681b:82fe Name: sanfrancisco.com Address: 2606:4700:30::681b:83fe</p>
 <pre><code>
 ## Command Aliases, Bash Functions and .bashrc
 
-The `alias` command is used to create command aliases. As an example, lets create a new alias called `isotime`. Let&#39;s say `date +&quot;%Y-%m-%dT%H%M%S&quot;` gives us the date and time in the format we&#39;d like. This isn&#39;t a fun command to type, so lets create an alias.
+The `alias` command is used to create command aliases. As an example, lets create a new alias called `isotime`. Let's say `date +"%Y-%m-%dT%H%M%S"` gives us the date and time in the format we'd like. This isn't a fun command to type, so lets create an alias.
 </code></pre>
 <p>[bjames@lwks1 ~]$ alias isotime=“date +”%Y-%m-%dT%H%M%S"" [bjames@lwks1 ~]$ isotime 2019-10-09T091650</p>
 <pre><code>
 __Note:__The `date` command has a argument that returns ISO 8601 formatted timestamps, but it includes colons in the timestamp. If we want to add timestamps to files, colons may cause problems.
 
-Aliases are great for simple, hard to remember strings of commands, but they can&#39;t be used for anything that requires variables. Luckily, bash is both a shell and a functional programming language. So for anything that requires variables, we can write functions. 
+Aliases are great for simple, hard to remember strings of commands, but they can't be used for anything that requires variables. Luckily, bash is both a shell and a functional programming language. So for anything that requires variables, we can write functions. 
 
-In the [SSH](#ssh) section we learned that you can log ssh sessions using `ssh hostname | tee logfile.log`. This isn&#39;t difficult to remember, but we might as well shorten the command a bit if we are going to be typing it regularly. This is a task that lends itself well to bash functions. 
+In the [SSH](#ssh) section we learned that you can log ssh sessions using `ssh hostname | tee logfile.log`. This isn't difficult to remember, but we might as well shorten the command a bit if we are going to be typing it regularly. This is a task that lends itself well to bash functions. 
 </code></pre>
 <p>function logssh() { currtime=$(isotime); ssh $1 | tee -a ~/sshlogs/<span class="math inline">1−</span>currtime.log; }</p>
 <pre><code>
 When working with bash functions `$n` refers to the nth command line argument. This means $1 refers to the string following `logssh`. 
 
-__Note:__ I&#39;m not going to go into detail on writing bash scripts here. That&#39;s outside of the scope of this document. I do want to give you a basic example of what they are and how to use them.
+__Note:__ I'm not going to go into detail on writing bash scripts here. That's outside of the scope of this document. I do want to give you a basic example of what they are and how to use them.
 
 To make the function available, we can simply paste the entire function into our terminal. 
 </code></pre>
 <p>[bjames@lwks1 ~]$ alias isotime=“date +”%Y-%m-%dT%H%M%S"" [bjames@lwks1 ~]$ function logssh() &gt; { &gt; &gt; currtime=$(isotime); &gt; ssh $1 | tee -a ~/sshlogs/<span class="math inline">1−</span>currtime.log; &gt; &gt; } [bjames@lwks1 ~]$ logssh 192.168.88.1</p>
 <pre><code>__Note:__ In this function, we leveraged the alias we created earlier. For completeness, I recreate the alias below. 
 
-There is one problem with this method, the function and alias we just created are only available in the current terminal session. Future and concurrent sessions can&#39;t make use of the function and alias we just created. 
+There is one problem with this method, the function and alias we just created are only available in the current terminal session. Future and concurrent sessions can't make use of the function and alias we just created. 
 
 ### .bashrc
 
@@ -568,9 +602,9 @@ There is one problem with this method, the function and alias we just created ar
 <pre><code>
 Upon login, the `alias` command is ran and the `logssh` function is created and ready to be ran. It should also be noted that `.bashrc` commands that write to `stdout` _will_ write to `stdout` when the session starts. 
 
-__Note:__ On my personal machines I like to add `fortune | cowsay` to the bottom of my `.bashrc` so that I&#39;m greeted by a cow each time I open a new terminal window. Fortune and Cowsay aren&#39;t usually installed by default, but are most likely available through your distribution&#39;s package manager.
+__Note:__ On my personal machines I like to add `fortune | cowsay` to the bottom of my `.bashrc` so that I'm greeted by a cow each time I open a new terminal window. Fortune and Cowsay aren't usually installed by default, but are most likely available through your distribution's package manager.
 </code></pre>
-<hr />
+<hr/>
 <table>
 <thead>
 <tr class="header">
@@ -631,13 +665,13 @@ __Note:__ On my personal machines I like to add `fortune | cowsay` to the bottom
 </ul></li>
 </ul>
 <section class="footnotes" role="doc-endnotes">
-<hr />
+<hr/>
 <ol>
-<li id="fn1" role="doc-endnote"><p>My apologies to Richard Stallman, <a href="https://www.gnu.org/gnu/linux-and-gnu.en.html">GNU+Linux</a> just doesn’t roll of the tongue quite as well.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>And Fedora since the ‘Beefy Miracle’ release in 2011!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>The <a href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/command.html#CMDUTIL">Linux Standard Base</a> is the closest thing we have to a standard. It contains a very small subset of the programs you’d find on a typical Linux installation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>This is due to a feature called alternate screen. I generally don’t mind altscreen, but there are ways to <a href="https://www.shallowsky.com/linux/noaltscreen.html">effectively disable it</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>OpenSSH is a widely used product of the OpenBSD Project, another Unix-like operating system.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>The wikipedia entry on <a href="https://en.wikipedia.org/wiki/Signal_(IPC)#POSIX_signals">POSIX signals</a> is a pretty good reference for what each signal actually means.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>My apologies to Richard Stallman, <a href="https://www.gnu.org/gnu/linux-and-gnu.en.html">GNU+Linux</a> just doesn’t roll of the tongue quite as well.<a class="footnote-back" href="#fnref1" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>And Fedora since the ‘Beefy Miracle’ release in 2011!<a class="footnote-back" href="#fnref2" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>The <a href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/command.html#CMDUTIL">Linux Standard Base</a> is the closest thing we have to a standard. It contains a very small subset of the programs you’d find on a typical Linux installation.<a class="footnote-back" href="#fnref3" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>This is due to a feature called alternate screen. I generally don’t mind altscreen, but there are ways to <a href="https://www.shallowsky.com/linux/noaltscreen.html">effectively disable it</a>.<a class="footnote-back" href="#fnref4" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>OpenSSH is a widely used product of the OpenBSD Project, another Unix-like operating system.<a class="footnote-back" href="#fnref5" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>The wikipedia entry on <a href="https://en.wikipedia.org/wiki/Signal_(IPC)#POSIX_signals">POSIX signals</a> is a pretty good reference for what each signal actually means.<a class="footnote-back" href="#fnref6" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

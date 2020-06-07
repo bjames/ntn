@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <head>
-    <title>{{ config.SITE_NAME }}</title>
+    <title>{% if note is defined %}{{ note.title }}{% else %}{{ config.SITE_NAME }}{% endif %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='notes-core.css') }}"/>
     <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='favicon/apple-icon-60x60.png') }}">
