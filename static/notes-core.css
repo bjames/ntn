@@ -71,6 +71,10 @@ button::-moz-focus-inner {
     color: var(--text-color);
 }
 
+.navcontainer a.icon {
+    display: none;
+}
+
 .content {
     max-width: 800px;
     margin: auto;
@@ -177,11 +181,11 @@ a {
 }
 
 @media only screen and (max-width: 1000px) {
-
+/*
     .content {
-        margin-top: 100px;
-        max-width: fit-content;
-        padding: 10px;
+        margin-top: 80px;
+        width: 100%;
+        padding: 5px;
     }
 
     .content {
@@ -193,6 +197,7 @@ a {
     }
 
     .navcontainer {
+        width: 100%;
         justify-content: space-between;
         align-items: center;
         padding-left: 20px;
@@ -207,13 +212,48 @@ a {
         font-size: 3em;
     }
 
+    .note_subtitle {
+        text-align: center;
+        font-size: 1em;
+    }
+*/
+
+    .navcontainer {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
     .navcontainer button {
         display: none;
     }
 
-    .note_subtitle {
-        text-align: center;
-        font-size: 1em;
+    #navlinks {
+        display: none;
+    }
+
+    /* Style navigation menu links */
+    .navcontainer a {
+        color: var(--text-color);
+        display: block;
+        text-decoration: none;
+    }
+
+    /* Style the hamburger menu */
+    .navcontainer a.hamburger {
+        position: fixed;
+        color: var(--text-color);
+        top: 0;
+        right: 0;
+        padding: 10px;
+        background: var(--background-color);
+    }
+    
+    /* Style the active link (or home/logo) */
+    .active {
+        background-color: #4CAF50;
+        color: white;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -230,4 +270,4 @@ a {
 
     }
 
-}
+}*/
