@@ -1,9 +1,9 @@
 <div class=navbar>
     <div class=navcontainer>
-        <a href="/">
+        <a class=navlogo href="/">
             <img src="/static/images/{{ config.HEADER_IMAGE }}" alt="logo">
         </a>
-        <div id=nav_links>
+        <div class=nav_links>
             <ul>
                 {% for link in config.NAV_LINKS %}
                 <li><a href={{ link[0] }}>{{ link[1] }}</a></li>
@@ -11,19 +11,5 @@
                 <li><button id="theme_toggle" style="display: none" onclick="switchTheme()">Dark 🌜</button></li>
             </ul>
         </div>
-        <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
-        <a href="javascript:void(0);" class="hamburger" onclick="hideNav()">
-            <i class="fa fa-bars"></i>
-        </a>
-        <script>
-            function hideNav() {
-                var x = document.getElementById("nav_links");
-                if (x.style.display === "block") {
-                    x.style.display = "none";
-                } else {
-                    x.style.display = "block";
-                }
-            } 
-        </script>
     </div>
 </div>

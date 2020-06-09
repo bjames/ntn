@@ -35,11 +35,11 @@ button::-moz-focus-inner {
 }
 
 .navbar {
-    display: flex;
     background-color: var(--background-color);
     width: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     padding: 10px;
 }
 
@@ -88,11 +88,11 @@ button::-moz-focus-inner {
 }
 
 body {
+    margin: 0;
     line-height: 1.6;
     font-size: 20px;
     background-color: var(--background-color);
     color: var(--text-color);
-    padding: 0 10px;
 }
 
 h1, h2, h3 {
@@ -103,7 +103,7 @@ h1 {
     text-align: center;
 }
 
-pre {
+pre, code {
     font-size: 14px;
     overflow-x: auto;
 }
@@ -120,12 +120,12 @@ a {
 
 .note_preview {
     line-height: 1;
-    padding: 10px;
 }
 
 .note_preview_title {
-    line-height: 0;
+    line-height: 1;
     white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 .note_preview_subtitle {
@@ -177,19 +177,18 @@ a {
 }
 
 #mc_embed_signup {
-    background-color: var(--background-color) !important;
+    background-color: var(--background-color);
 }
 
 @media only screen and (max-width: 1000px) {
-/*
+
     .content {
-        margin-top: 80px;
-        width: 100%;
+        margin-top: 40px;
         padding: 5px;
     }
 
     .content {
-        font-size: 2em;
+        font-size: 1em;
     }
 
     .content pre {
@@ -197,63 +196,48 @@ a {
     }
 
     .navcontainer {
-        width: 100%;
-        justify-content: space-between;
+        width: 100vw;
+        margin: 0;
+        display: flex;
         align-items: center;
-        padding-left: 20px;
-        padding-right: 20px;
+        justify-content: space-between;
+        position: relative;
     }
 
-    .navcontainer img {
-        width: 300px;
+    .nav_links {
+        font-size: 1em;
+        padding-bottom: 0px;
+        padding-top: 0px
     }
 
-    .navcontainer li {
-        font-size: 3em;
+    .navlogo {
+        float: left;
+    }
+
+    .navlogo img{
+        width: 100px;
+    }
+
+    .note_preview_title {
+        white-space: pre-wrap;
+        margin-bottom: 0;
+    }
+
+    .note_preview_subtitle {
+        margin-top: 2px;
+    }
+
+    .note_preview_summary {
+        margin: 0px;
     }
 
     .note_subtitle {
         text-align: center;
         font-size: 1em;
     }
-*/
 
-    .navcontainer {
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-    }
-
-    .navcontainer button {
+    #theme_toggle {
         display: none;
-    }
-
-    #navlinks {
-        display: none;
-    }
-
-    /* Style navigation menu links */
-    .navcontainer a {
-        color: var(--text-color);
-        display: block;
-        text-decoration: none;
-    }
-
-    /* Style the hamburger menu */
-    .navcontainer a.hamburger {
-        position: fixed;
-        color: var(--text-color);
-        top: 0;
-        right: 0;
-        padding: 10px;
-        background: var(--background-color);
-    }
-    
-    /* Style the active link (or home/logo) */
-    .active {
-        background-color: #4CAF50;
-        color: white;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -270,4 +254,4 @@ a {
 
     }
 
-}*/
+}
