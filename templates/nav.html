@@ -11,5 +11,13 @@
                 <li><button id="theme_toggle" style="display: none" onclick="switchTheme()">Dark 🌜</button></li>
             </ul>
         </div>
+        <div class=mobile_dropdown>
+            <div class=mobile_menu> MENU </div>
+            <div class="dropdown_content">
+                {% for link in config.NAV_LINKS %}
+                <p><a href={{ link[0] }}>{{ link[1] }}</a></p>
+                {% endfor %}     
+            </div>
+        </div>
     </div>
 </div>
