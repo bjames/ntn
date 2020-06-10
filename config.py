@@ -14,6 +14,7 @@ HEADER_IMAGE = "ntn_black.png"
 NIGHT_MODE_HEADER_IMAGE = "ntn_night.png"
 NAV_LINKS = [
     ["/", "Home"],
+    ["/tools", "Tools"],
     ["/about", "About"],
 ]
 STYLESHEET = "notes-core.css"

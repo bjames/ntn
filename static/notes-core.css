@@ -226,9 +226,11 @@ a {
     }
 
     .mobile_menu {
+        /*
         padding: 0px 2px 0px 2px;
         box-shadow: 0 0 0 1pt var(--text-color);
         border-radius: 2px;
+        */
         font-family: sans-serif;
     }
       
