@@ -18,4 +18,4 @@ NAV_LINKS = [
 ]
 STYLESHEET = "notes-core.css"
 URI = "neverthenetwork.com"
-PRODUCTION = True
+PRODUCTION = False
