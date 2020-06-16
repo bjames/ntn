@@ -1,0 +1,6 @@
+<form id="app" class="rphash" method="POST">
+    <input type="text" name="rp_address" placeholder="192.168.0.1" required pattern="^[a-fA-F0-9\.:]*$" value={{ rp_address }}>
+    <input type="text" name="group" placeholder="239.1.1.1" required pattern="^[a-fA-F0-9\.:]*$" value={{ group }}>
+    <input type="text" name="mask" placeholder="30" required pattern="^[0-9]*$" value={{ mask }}>
+    {% include "submit.html" %}
+</form>

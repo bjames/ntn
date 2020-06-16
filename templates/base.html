@@ -19,8 +19,17 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/6be7bf8229e7c71c33fa5f465/621303c5cb9820f7968d8ebcf.js");</script>
+    <script>
+        (function (w,d,s,o,f,js,fjs) {
+        w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
+        js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+        js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
+        }(window, document, 'script', 'plausible', 'https://plausible.io/js/p.js'));
+      
+        plausible('page')
+    </script>
     <script type="module">
-
         // based on:
         // https://stackoverflow.com/questions/56300132/how-to-over-ride-css-prefers-color-scheme-setting
         function detectColorScheme(){
@@ -64,6 +73,7 @@
             }
         }
     </script>
+    {% block head %}{% endblock %}
 </head>
 <body tabIndex=0>
 <div class=page>

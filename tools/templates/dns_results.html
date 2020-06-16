@@ -1,0 +1,10 @@
+
+DNS Lookup Results for {{ url }} IN {{ record_type }} 
+{{ now.strftime('%FT%H:%M:%SZ') }} 
+___________________________
+{% if dns_results %}
+<table><tbody>
+{% for dns_result in dns_results %}
+<tr><td>{{ dns_result['resolver']['ip'] }} ({{ dns_result['resolver']['name'] }})</td>{% for response in dns_result['response'] %}<td>{{ response }}</td>{% endfor %}</tr>
+{% endfor %}
+{% endif %}</tbody></table>

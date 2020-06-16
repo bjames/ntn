@@ -1,0 +1,4 @@
+<form id="app" class="whois" method="POST">
+    <input type="text" name="hostname" placeholder={{ hostname or "neverthenetwork.com" }} required pattern="^[a-zA-Z0-9\.:]*$" value={{ hostname }}>
+    {% include "submit.html" %}
+</form>

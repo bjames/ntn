@@ -1,0 +1,15 @@
+<form id="app" class="dns" method="POST">
+    <input type = "text" name = "url" placeholder="neverthenetwork.com" required pattern="^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$" value={{ url }}>
+    <select name = "record_type">
+        {% for dns_record_type in dns_record_types %}
+        <option value ={{ dns_record_type }} {% if dns_record_type in record_type %}selected{% endif %}>{{ dns_record_type }}</option>
+        {% endfor %}
+    </select>
+    <select name = "user_resolver">
+        <option value = "All">All</option>
+        {% for dns_resolver in dns_resolver_list %}
+        <option value ="{{ dns_resolver["name"] }}" {% if dns_resolver["name"] in user_resolver %}selected{% endif %}>{{ dns_resolver["name"] }}</option>
+        {% endfor %}
+    </select>
+    {% include "submit.html" %}
+</form>

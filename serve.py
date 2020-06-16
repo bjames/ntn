@@ -2,15 +2,19 @@ from flask import Flask, render_template, send_from_directory, request, abort
 from render import render_all
 
 from datetime import datetime
+from tools.tools import ntntools
 
 import os
 
 app = Flask(__name__)
+app.register_blueprint(ntntools)
 
 # TODO as we get closer migrate to https://flask.palletsprojects.com/en/1.1.x/config/
 app.config.from_pyfile("config.py")
 
 notes, tag_set, static_pages = render_all()
+
+print(app.url_map)
 
 @app.route("/")
 def index():

@@ -1,0 +1,5 @@
+<form id="app" class="curl" method="POST">
+        <input type="text" name="url" placeholder={{ "https://neverthenetwork.com" }} required pattern="(((http|https)://)?\S+\.\S+|[0-9.]*)" value={{ url }}>
+        <span class="wrapper"><input type="checkbox" name="follow_redirects"> Follow Redirects </span>
+        {% include "submit.html" %}
+</form>

@@ -1,0 +1,14 @@
+
+OUI Lookup: {{ mac_address }}
+___________________________
+{% if results %}{% for result in results %}
+ OUI: {{ result.assignment }}
+
+ Assigned to:
+
+    {{ result.organization }}
+    {{ result.organization_address }}
+{% endfor %}{% endif %}
+{% if error %}{{ error }}
+
+{% endif %}

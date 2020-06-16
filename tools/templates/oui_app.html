@@ -1,0 +1,4 @@
+<form id="app" class="oui" method="POST">
+        <input type="text" name="mac_address" placeholder={{ mac_address or "00:00:5e:00:01:00" }} required pattern="^[a-fA-F0-9:-]*$" value={{ mac_address }}>
+        {% include "submit.html" %}
+</form>

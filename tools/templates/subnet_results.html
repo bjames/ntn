@@ -1,0 +1,12 @@
+
+Subnet {{ ip_address }} {{ subnet_mask }}
+___________________________
+{% if results %}
+<table>
+{% for key, value in results.items() %}
+<tr>
+<td>{{ key }}</td><td>{{ value }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}

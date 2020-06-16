@@ -1,0 +1,86 @@
+
+whois {{ hostname }}
+{{ now.strftime('%FT%H:%M:%SZ') }} 
+___________________________
+{% if results.query %}
+<table>
+ASN Information
+        <tr><td>ASN</td><td>{{ results.asn }}</td></tr>
+        <tr><td>CIDR</td><td>{{ results.asn_cidr }}</td></tr>
+        <tr><td>Country Code</td><td>{{ results.asn_country_code }}</td></tr>
+        <tr><td>Allocation Date</td><td>{{ results.asn_date }}</td></tr>
+        <tr><td>Registry</td><td>{{ results.asn_registry }}</td></tr>
+        <tr><td>ASN Description</td><td>{{ results.asn_description }}</td></tr>
+</table>
+<table>
+Contact
+        {% for object, value in results.objects.items() %}
+        <tr><td>Contact #</td><td>{{ loop.index }}</td></tr>
+        <tr><td>Contact Name</td><td>{{ value.contact.name }}</td></tr>
+        <tr><td valign="top">Address</td>
+        {% for address in value.contact.address %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+        <td>{{ address.value }}</td></tr>
+        {% endfor %}
+        {% if value.contact.phone %}
+        <tr><td>Phone</td>
+        {% for phone in value.contact.phone %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+        <td>{{ phone.value }}</td></tr>
+        {% endfor %}
+        {% endif %}
+        {% if value.contact.email %}
+        <tr><td>Email</td>
+        {% for email in value.contact.email %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+        <td>{{ email.value }}</td></tr>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+</table>
+<table>
+Network Information
+    <tr><td>CIDR</td><td>{{ results.network.cidr }}</td></tr>
+    <tr><td>Country</td><td>{{ results.network.country }}</td></tr>
+    <tr><td>Events</td>
+    {% for event in results.network.events | reverse %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+    <td>Event #</td><td>{{ loop.index }}</td></tr>
+    <tr><td></td><td>Action</td><td>{{ event.action }}</td></tr>
+    <tr><td></td><td>Actor</td><td>{{ event.actor }}</td></tr>
+    <tr><td></td><td>Timestamp</td><td>{{ event.timestamp }}</td></tr>
+    {% endfor %}
+    <tr><td>Type</td><td>{{ results.network.type }}</td></tr>
+    <tr><td>Handle</td><td>{{ results.network.handle }}</td></tr>
+    <tr><td>Parent Handle</td><td>{{ results.network.parent_handle }}</td></tr>
+    <tr><td>IP Version</td><td>{{ results.network.ip_version }}</td></tr>
+    <tr><td>First Host</td><td>{{ results.network.start_address }}</td></tr>
+    <tr><td>Last Host</td><td>{{ results.network.end_address }}</td></tr>
+    {% if results.links %}<tr><td>Links</td>
+    {% for link in results.network.link %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+    <td>{{ link }}</td></tr>
+    {% endfor %}{% endif %}
+    <tr><td>Name</td><td>{{ results.network.name }}</td></tr>
+    <tr><td>Notices</td>
+    {% for notice in results.network.notices %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+    <td>Notice #</td><td>{{ loop.index }}</td></tr>
+    <tr><td></td><td>Title</td><td>{{ notice.title }}</td></tr>
+    <tr><td></td><td>Description</td><td>{{ notice.description }}</td></tr>
+    <tr><td></td><td>Links</td><td>{% if notice.links %}{% for link in notice.links %}{{ link }} {% endfor %}{% endif %}</td></tr>
+    {% endfor %}
+    {% if results.network.remarks %}
+    <tr><td>Remarks</td>
+    {% for remark in results.network.remarks %}{% if loop.index > 1 %}<tr><td></td>{% endif %}
+    <td>Remark #</td><td>{{ loop.index }}</td></tr>
+    <tr><td></td><td>Title</td><td>{{ remark.title }}</td></tr>
+    <tr><td></td><td>Description</td><td>{{ remark.description }}</td></tr>
+    <tr><td></td><td>Links</td><td>{% if remark.links %}{% for link in remark.links %}{{ link }} {% endfor %}{% endif %}</td></tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% else %}
+<table>
+{% for key, value in results.items() %}
+<tr><td>{{ key }}</td>
+{% if value is iterable and value is not string %}{% for subvalue in value %}{% if loop.index > 1 %}<tr><td></td>{% endif %}<td>{{ subvalue }}</td></tr>{% endfor %}
+{% else %}<td>{{ value }}</td>{% endif %}
+{% endfor %}
+</tr>
+</table>
+{% endif %}

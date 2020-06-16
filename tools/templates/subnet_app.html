@@ -1,0 +1,5 @@
+<form id="app" class="subnet" method="POST">
+    <input type="text" name="ip_address" placeholder="192.168.0.0" required pattern="^[a-fA-F0-9\.:]*$" value={{ ip_address }}>
+    <input type="text" name="subnet_mask" class="subnet_mask" placeholder="/24" required pattern="^[0-9\.\/]*$" value={{ subnet_mask }}>
+    {% include "submit.html" %}
+</form>

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block head %}<script>plausible('trackPushState')</script>{% endblock %}
+{% block content %}
+<div id="tools_nav">{% include "tools_nav.html" %}</div>
+<div id="app">{% block app %}{% endblock %}</div>
+<pre id="term">
+
+Your Public IP Address: 
+
+ {{ public_ip }}
+ {{ results|safe }}
+</pre>
+{% include "bottom_buttons.html" %}
+{% endblock %}
