@@ -9,3 +9,4 @@ sqlalchemy
 ipwhois
 python-whois
 numpy
+uwsgi

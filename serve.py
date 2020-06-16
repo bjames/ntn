@@ -11,6 +11,7 @@ app.register_blueprint(ntntools)
 
 # TODO as we get closer migrate to https://flask.palletsprojects.com/en/1.1.x/config/
 app.config.from_pyfile("config.py")
+os.environ.setdefault('PYPANDOC_PANDOC', app.config["PANDOC_PATH"])
 
 notes, tag_set, static_pages = render_all()
 

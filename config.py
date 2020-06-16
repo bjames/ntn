@@ -19,4 +19,5 @@ NAV_LINKS = [
 ]
 STYLESHEET = "notes-core.css"
 URI = "neverthenetwork.com"
+PANDOC_PATH = "/usr/bin/pandoc"
 PRODUCTION = True
