@@ -131,11 +131,13 @@ a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-bottom: 5px;
 }
 .note_preview_subtitle {
     color: var(--secondary-text-color);
     line-height: 1;
     font-size: 12px;
+    margin-top: 5px;
 }
 
 .note_preview_subtitle a{
