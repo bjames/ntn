@@ -97,7 +97,7 @@ def ouilookup(mac_address):
 
     results = check_mam_mas(results, mac_address, Session)
     results = check_iab(results, mac_address, Session)
-
+    
     return results
 
 

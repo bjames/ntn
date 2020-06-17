@@ -3,9 +3,9 @@ import requests
 from csv import reader
 from sqlalchemy.exc import OperationalError, IntegrityError
 
-from config import OUI_FILES
-from ntn_models import OUI_MAL, OUI_MAM, OUI_MAS, OUI_CID, OUI_IAB
-from ntn_db import db_session, init_db
+from .config import OUI_FILES
+from tools.ntnmodels import OUI_MAL, OUI_MAM, OUI_MAS, OUI_CID, OUI_IAB
+from tools.ntndb import db_session, init_db
 
 
 def clear_tables():
@@ -41,27 +41,24 @@ def update_table(oui_csv, table_name):
         if table_name == 'OUI_MAL':
 
             Session.add(OUI_MAL(row[1], row[2], row[3]))
-            Session.commit()
 
         elif table_name == 'OUI_MAM':
 
             Session.add(OUI_MAM(row[1], row[2], row[3]))
-            Session.commit()
 
         elif table_name == 'OUI_MAS':
 
             Session.add(OUI_MAS(row[1], row[2], row[3]))
-            Session.commit()
 
         elif table_name == 'OUI_CID':
 
             Session.add(OUI_CID(row[1], row[2], row[3]))
-            Session.commit()
 
         elif table_name == 'OUI_IAB':
 
             Session.add(OUI_IAB(row[1], row[2], row[3]))
-            Session.commit()
+
+    Session.commit()
 
 def download_oui_lists():
 
@@ -72,6 +69,8 @@ def download_oui_lists():
         response = requests.get(oui_file['url'])
 
         if response.status_code == 200:
+
+            print("Rebuilding OUI Database")
 
             oui_csv = reader(response.text.splitlines())
 

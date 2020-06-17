@@ -2,14 +2,25 @@ from flask import Flask, render_template, send_from_directory, request, abort
 from render import render_all
 
 from datetime import datetime
+
+# TODO can this all be kept in the blueprint?
 from tools.tools import ntntools
+from tools.config import DATABASE_KEY, DATABASE
+from tools.ntndb import db_session
 
 import os
 
 app = Flask(__name__)
 app.register_blueprint(ntntools)
-app.url_map.strict_slashes = False
 
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# end database sessions when the application is ended
+@app.teardown_appcontext
+def shutdown_session(exception = None):
+    db_session.remove()
+
+app.url_map.strict_slashes = False
 
 # TODO as we get closer migrate to https://flask.palletsprojects.com/en/1.1.x/config/
 app.config.from_pyfile("config.py")
