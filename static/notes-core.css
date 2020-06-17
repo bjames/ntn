@@ -198,8 +198,8 @@ a {
 }
 
 #subnavbar {
-    display: flex;
-    justify-content: space-evenly;
+    display: block;
+    text-align: center;
     margin-top: 12px;
     font-size: 14px;
     text-align: center;
@@ -210,6 +210,7 @@ a {
     color: var(--text-color);
     border: 0;
     outline: 0;
+    padding: 5px;
 }
 
 @keyframes spinner {
@@ -367,5 +368,14 @@ a {
         }
 
     }
+
+    #term {
+        width: 95%; /* The width is 100%, when the viewport is 800px or smaller */
+        padding-right: 0px;
+        padding-left: 0px;
+        height: 70vh;
+        font-family: monospace;
+        font-size: .5em;
+      }
 
 }
