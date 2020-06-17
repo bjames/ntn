@@ -8,6 +8,8 @@ import os
 
 app = Flask(__name__)
 app.register_blueprint(ntntools)
+app.url_map.strict_slashes = False
+
 
 # TODO as we get closer migrate to https://flask.palletsprojects.com/en/1.1.x/config/
 app.config.from_pyfile("config.py")

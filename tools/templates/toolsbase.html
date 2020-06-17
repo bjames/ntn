@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-{% block head %}<script>plausible('trackPushState')</script>{% endblock %}
+{% block head %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='tools.js') }}"></script>
+<script>plausible('trackPushState')</script>
+{% endblock %}
 {% block content %}
 <div id="tools_nav">{% include "tools_nav.html" %}</div>
 <div id="app">{% block app %}{% endblock %}</div>

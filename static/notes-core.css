@@ -198,13 +198,43 @@ a {
 }
 
 #subnavbar {
+    display: flex;
+    justify-content: space-evenly;
     margin-top: 12px;
     font-size: 14px;
     text-align: center;
+    width: 100%;
 }
 
 #subnavbar a {
     color: var(--text-color);
+    border: 0;
+    outline: 0;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top-color: grey;
+    border-bottom-color: grey;
+    animation: spinner 1s ease infinite;
+}
+
+#tools_nav .active {
+    box-shadow: 0 0 0 2px var(--secondary-text-color);
 }
 
 #app {
