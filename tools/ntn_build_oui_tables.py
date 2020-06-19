@@ -8,18 +8,31 @@ from tools.ntnmodels import OUI_MAL, OUI_MAM, OUI_MAS, OUI_CID, OUI_IAB
 from tools.ntndb import db_session, init_db
 
 
-def clear_tables():
+def clear_table(table_name):
 
     try:
 
         Session = db_session()
 
-        Session.query(OUI_MAL).delete()
-        Session.query(OUI_MAM).delete()
-        Session.query(OUI_MAS).delete()
-        Session.query(OUI_CID).delete()
-        Session.query(OUI_IAB).delete()
+        if table_name == 'OUI_MAL':
 
+            Session.query(OUI_MAL).delete()
+
+        elif table_name == 'OUI_MAM':
+
+            Session.query(OUI_MAM).delete()
+
+        elif table_name == 'OUI_MAS':
+
+            Session.query(OUI_MAS).delete()
+
+        elif table_name == 'OUI_CID':
+
+            Session.query(OUI_CID).delete()
+
+        elif table_name == 'OUI_IAB':
+
+            Session.query(OUI_IAB).delete()
 
         Session.commit()
 
@@ -30,6 +43,8 @@ def clear_tables():
 
 
 def update_table(oui_csv, table_name):
+
+    clear_table(table_name)
 
     Session = db_session()
 
@@ -60,9 +75,8 @@ def update_table(oui_csv, table_name):
 
     Session.commit()
 
-def download_oui_lists():
 
-    clear_tables()
+def download_oui_lists():
 
     for oui_file in OUI_FILES:
 
@@ -70,7 +84,7 @@ def download_oui_lists():
 
         if response.status_code == 200:
 
-            print("Rebuilding OUI Database")
+            print(f"Rebuilding Table {oui_file['table_name']}")
 
             oui_csv = reader(response.text.splitlines())
 

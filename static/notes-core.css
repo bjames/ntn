@@ -260,7 +260,7 @@ a {
         padding: 5px;
     }
 
-    .content {
+    * {
         font-size: 1em;
     }
 
@@ -295,11 +295,6 @@ a {
     }
 
     .mobile_menu {
-        /*
-        padding: 0px 2px 0px 2px;
-        box-shadow: 0 0 0 1pt var(--text-color);
-        border-radius: 2px;
-        */
         font-family: sans-serif;
     }
       
@@ -370,6 +365,10 @@ a {
         --toggle-text-color: #444;
         }
 
+    }
+
+    #subnavbar {
+        font-size: 1em;
     }
 
     #term {

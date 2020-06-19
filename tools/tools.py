@@ -4,10 +4,10 @@ from tools import ntncurl, ntndns, ntnsubnet, ntnping, ntntraceroute, ntnpubip, 
 from tools.config import DNS_RECORD_TYPES, DNS_RESOLVER_LIST, DATABASE, DATABASE_KEY
 
 from sqlalchemy.exc import OperationalError
+ 
+ntn_build_oui_tables.download_oui_lists()
 
 ntntools = Blueprint("tools", __name__, template_folder="templates", url_prefix="/tools")
-
-ntn_build_oui_tables.download_oui_lists()
 
 @ntntools.route("/", methods=["GET", "POST"])
 def tools():

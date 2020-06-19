@@ -28,8 +28,6 @@ os.environ.setdefault('PYPANDOC_PANDOC', app.config["PANDOC_PATH"])
 
 notes, tag_set, static_pages = render_all()
 
-print(app.url_map)
-
 @app.route("/")
 def index():
 
