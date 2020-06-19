@@ -214,6 +214,7 @@ a {
     border: 0;
     outline: 0;
     padding: 5px;
+    display: inline-block;
 }
 
 @keyframes spinner {
@@ -368,7 +369,7 @@ a {
     }
 
     #subnavbar {
-        font-size: 1em;
+        font-size: .7em;
     }
 
     #term {
