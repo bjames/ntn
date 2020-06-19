@@ -244,6 +244,11 @@ a {
 
 #app {
     text-align: center;
+    display: inline-block;
+}
+
+#app .wrapper {
+    display: inline-block;
 }
 
 #bottom_buttons {
@@ -378,7 +383,7 @@ a {
         padding-left: 0px;
         height: 70vh;
         font-family: monospace;
-        font-size: .5em;
+        font-size: .8em;
       }
 
 }
