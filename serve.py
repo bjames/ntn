@@ -58,9 +58,11 @@ def posts(filename):
 @app.route("/<filename>")
 def static_page(filename):
 
-    if filename in [page.filename for page in static_pages]:
+    for page in static_pages:
 
-        return render_template("note.html", filename=filename)
+        if filename == page.filename:
+
+            return render_template("static.html", filename=filename, note=page)
 
     else:
 

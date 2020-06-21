@@ -146,7 +146,12 @@ def render_all():
 
         elif filename.endswith(RENDERER_CONFIG["image_file_extensions"]):
 
-            os.symlink(file_path, f"{image_directory}/{filename}")
+            try:
+                os.symlink(file_path, f"{image_directory}/{filename}")
+
+            # link already exists, so we can skip
+            except FileExistsError:
+                pass
 
     tag_set = get_tags(notes)
 
