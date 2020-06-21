@@ -3,6 +3,7 @@
 <head>
     <title>{% if note is defined %}{{ note.title }}{% else %}{{ config.SITE_NAME }}{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{% if note is defined %}{{ note.summary }}{% else %}{{ config.DEFAULT_META_DESCRIPTION }}{% endif %}">
     <link rel="stylesheet" href="{{ url_for('static', filename='notes-core.css') }}"/>
     <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='favicon/apple-icon-60x60.png') }}">
