@@ -4,7 +4,7 @@ tags:
 - Route/Switch
 publication_date: 2019-09-04
 author: Brandon James
-post_image: /static/images/lisp_overview.png
+post_image: /static/images/post/lisp_overview.png
 ---
 
 <iframe src="https://pinecast.com/player/3ba520d4-69f1-4e69-ba83-7750b4dbba54?theme=minimal" seamless height="60" style="border:0" class="pinecast-embed" frameborder="0" width="100%"></iframe>
@@ -29,7 +29,7 @@ LISP can be thought of as a dynamic tunneling protocol. LISP data plane packets 
 
 LISP endpoints continue to speak IP exactly like they do today. From the perspective of a LISP router, each endpoint has an EID, but from the perspective of the endpoint itself, it has an IP address. In addition, endpoints only send traffic to EIDs. The general flow for a LISP packet is (1) the endpoint sends a packet destined to an EID, (2) the LISP router receives the packet and looks up the destination EID in the EID-to-RLOC database, (3) the router encapsulates the packet and forwards it to the destination RLOC and (4) the destination router decapsulates the packet and forwards it to the destination endpoint.
 
-[![LISP Overview](/static/images/lisp_overview.png "LISP Overview")](/static/images/lisp_overview.png)
+[![LISP Overview](/static/images/post/lisp_overview.png "LISP Overview")](/static/images/post/lisp_overview.png)
 
 ## EID-to-RLOC Resolution
 

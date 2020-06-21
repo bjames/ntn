@@ -4,7 +4,9 @@ SCRIPT_PATH = f"{os.path.split(os.path.abspath(__file__))[0]}"
 RENDERER_CONFIG = {
     "input_directory": f"{SCRIPT_PATH}/raw/",
     "input_file_extensions": (".md", ".markdown"),
+    "image_file_extensions": (".jpg", ".jpeg", ".png", ".svg"),
     "output_directory": f"{SCRIPT_PATH}/static/rendered/",
+    "image_directory": f"{SCRIPT_PATH}/static/images/post/",
     "pandoc_extra_args": [],
 }
 NOTES_DIR = "notes"

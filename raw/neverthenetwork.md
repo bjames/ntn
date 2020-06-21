@@ -2,11 +2,11 @@
 title: Never The Network
 publication_date: 2019-11-23
 author: Brandon James
-post_image: /static/images/ITBlogAwards_2019_Badge-Finalist-BestNewcomer.png
+post_image: /static/images/post/ITBlogAwards_2019_Badge-Finalist-BestNewcomer.png
 summary: A month ago I decided to submit NTN to Cisco's IT Blog Awards in the Best Newcomer Category. To my surprise it got selected as a finalist. Since I don't have an about page, I wanted to briefly write about who I am, what NTN is and my plans for the future of NTN. 
 ---
 
-[![Finalist](/static/images/ITBlogAwards_2019_Badge-Finalist-BestNewcomer.png "Finalist")](https://www.ciscofeedback.vovici.com/se/705E3ECD18791A68)
+[![Finalist](/static/images/post/ITBlogAwards_2019_Badge-Finalist-BestNewcomer.png "Finalist")](https://www.ciscofeedback.vovici.com/se/705E3ECD18791A68)
 
 About a month ago I decided to submit NTN to Cisco's IT Blog Awards in the Best Newcomer Category. To my surprise it got selected as a finalist. If you'd like to vote for me (or any of the other great candidates), you can do so [here](https://www.ciscofeedback.vovici.com/se/705E3ECD18791A68). Since I don't have an about page, I wanted to briefly write about who I am and what NTN is. 
 

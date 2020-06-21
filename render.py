@@ -11,6 +11,7 @@ from notes import Note
 
 input_directory = os.fspath(RENDERER_CONFIG["input_directory"])
 output_directory = os.fspath(RENDERER_CONFIG["output_directory"])
+image_directory = os.fspath(RENDERER_CONFIG["image_directory"])
 
 
 def get_metadata(file_path: str) -> dict:
@@ -105,6 +106,7 @@ def render_all():
     static_pages = set()
 
     Path(output_directory).mkdir(parents=True, exist_ok=True)
+    Path(image_directory).mkdir(parents=True, exist_ok=True)
 
     for file in os.listdir(input_directory):
 
@@ -141,6 +143,10 @@ def render_all():
             else:
 
                 notes.add(Note(output_file, clean_filename, **metadata))
+
+        elif filename.endswith(RENDERER_CONFIG["image_file_extensions"]):
+
+            os.symlink(file_path, f"{image_directory}/{filename}")
 
     tag_set = get_tags(notes)
 

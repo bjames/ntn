@@ -5,7 +5,7 @@ author: Brandon James
 static_url: "about"
 ---
 
-[<img src="/static/images/me.jpg" style="border-radius:50%; width:300px">](https://www.brandonsjames.com)
+[<img src="/static/images/post/me.jpg" style="border-radius:50%; width:300px">](https://www.brandonsjames.com)
 
 Hi! My name is Brandon James. I am a Network Engineer living in Fort Worth, TX. Before I was all in on Networking, I worked for a Managed Services company where I worked with virtualization, storage, networking, Windows servers, Linux servers and did a bit of desktop support. I’m also a graduate of Texas Tech University where I studied Economics and minored in Computer Science. I am also slowly[^1] working towards an MS in CS though Arizona State online. To this day, I maintain a strong interest in Computer Science which has a direct impact in the way I approach networking topics.
 
