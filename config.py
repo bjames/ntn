@@ -11,8 +11,7 @@ NOTES_DIR = "notes"
 SITE_NAME = "It's Never The Network"
 HEADER_TEXT = "It's Never The Network"
 DEFAULT_META_DESCRIPTION = "It's Never The Network! Technical deep dives, network tools and more!"
-HEADER_IMAGE = "ntn_black.png"
-NIGHT_MODE_HEADER_IMAGE = "ntn_night.png"
+HEADER_IMAGE = "ntn.png"
 NAV_LINKS = [
     ["/", "Home"],
     ["/tools", "Tools"],
