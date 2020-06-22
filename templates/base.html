@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 <head>
-    <title>{% if note is defined %}{{ note.title }}{% else %}{{ config.SITE_NAME }}{% endif %}</title>
+    <title>{% if note is defined %}{{ note.title }}{% else %}{% block title %}{{ config.SITE_NAME }}{% endblock %}{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{% if note is defined %}{{ note.summary }}{% else %}{{ config.DEFAULT_META_DESCRIPTION }}{% endif %}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='notes-core.css') }}"/>
+    <link rel="stylesheet" href="/static/{{ config.STYLESHEET }}"/>
     <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='favicon/apple-icon-60x60.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='favicon/apple-icon-72x72.png') }}">
@@ -18,8 +18,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
-    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/6be7bf8229e7c71c33fa5f465/621303c5cb9820f7968d8ebcf.js");</script>
-    <script async defer data-domain="staging.neverthenetwork.com" src="https://plausible.io/js/plausible.js"></script>
+    {{ config.CUSTOM_HEAD_HTML | safe }}
     <script type="module">
         // based on:
         // https://stackoverflow.com/questions/56300132/how-to-over-ride-css-prefers-color-scheme-setting
