@@ -302,24 +302,29 @@ a {
     .mobile_menu {
         font-family: sans-serif;
     }
+
+    .mobile_menu a {
+        text-decoration: none;
+        color: var(--text-color)
+    }
       
     .dropdown_content {
         display: none;
-        line-height: 1.2;
-        background-color: var(--background-color);
     }
 
     .dropdown_content a {
         color: var(--text-color);
     }
     
-    .mobile_dropdown:hover .dropdown_content {
+    .dropdown_content_visible {
         position: fixed;
         left: 0px;
         margin-top: 5px;
         padding-left: 5px;
         width: 100%;
+        background-color: var(--background-color);
         display: block;
+        line-height: 1.2;
     }
 
     @media (hover: none) {

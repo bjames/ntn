@@ -63,9 +63,20 @@
             }
         }
     </script>
+    <script>
+        function mobileNav() {
+            var x = document.getElementById("mobile_dropdown_content");
+            
+            if (x.className === "dropdown_content") {
+                x.className = "dropdown_content_visible";
+            } else {
+                x.className = "dropdown_content";
+            }
+        } 
+    </script>
     {% block head %}{% endblock %}
 </head>
-<body tabIndex=0>
+<body>
 <div class=page>
 {% include "nav.html" %}
 <div class=content>

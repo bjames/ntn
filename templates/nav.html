@@ -12,8 +12,8 @@
             </ul>
         </div>
         <div class=mobile_dropdown>
-            <div class=mobile_menu> Menu ▾ </div>
-            <div class="dropdown_content">
+            <div class=mobile_menu><a href="javascript:void(0);" onclick="mobileNav()">Menu ▾</a></div>
+            <div id="mobile_dropdown_content" class="dropdown_content">
                 {% for link in config.NAV_LINKS %}
                 <p><a href={{ link[0] }}>{{ link[1] }}</a></p>
                 {% endfor %}     
