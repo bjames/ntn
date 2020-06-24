@@ -12,10 +12,10 @@
             </ul>
         </div>
         <div class=mobile_dropdown>
-            <div class=mobile_menu><a href="javascript:void(0);" onclick="mobileNav()">Menu ▾</a></div>
+            <div class=mobile_menu><a id=mobile_menu_link href="javascript:void(0);" onclick="mobileNav()">Menu ▾</a></div>
             <div id="mobile_dropdown_content" class="dropdown_content">
                 {% for link in config.NAV_LINKS %}
-                <p><a href={{ link[0] }}>{{ link[1] }}</a></p>
+                <p><a class="mobile_dropdown_link" href={{ link[0] }}>{{ link[1] }}</a></p>
                 {% endfor %}     
             </div>
         </div>
