@@ -41,7 +41,6 @@ button::-moz-focus-inner {
     top: 0;
     left: 0;
     padding: 10px 0px;
-    border-bottom: 1px solid;
 }
 
 .navcontainer {
@@ -287,10 +286,6 @@ a {
         display: flex;
         align-items: center;
         position: relative;
-    }
-
-    .navbar {
-        border-bottom: initial;
     }
 
     .navlogo {
