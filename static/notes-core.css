@@ -85,8 +85,8 @@ button::-moz-focus-inner {
 
 .content img {
     max-width: 800px;
-    display: block;
-    margin: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .mobile_dropdown {
