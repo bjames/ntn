@@ -392,6 +392,10 @@ a {
         font-size: 1em;
     }
 
+    #app input, select, textarea, button{
+        font-size: 1em;
+    }
+
     #term {
         width: 97%; /* The width is 100%, when the viewport is 800px or smaller */
         padding-right: 0px;
