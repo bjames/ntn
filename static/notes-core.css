@@ -390,6 +390,10 @@ a {
         font-size: .7em;
     }
 
+    #app {
+        font-size: .7em;
+    }
+
     #term {
         width: 97%; /* The width is 100%, when the viewport is 800px or smaller */
         padding-right: 0px;
