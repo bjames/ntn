@@ -100,6 +100,23 @@ def add_toc(md_file, html_file):
 
             html.write(str(rendered_soup))
 
+
+def update_img_tags(html_file):
+
+    soup = BeautifulSoup(open(html_file), "html.parser")
+
+    img_tags = soup.find_all("img")
+
+    for tag in img_tags:
+
+        if "/" not in tag["src"]:
+            
+            tag["src"] = f"/static/images/post/{tag['src']}"
+
+    with open(html_file, "w") as html:
+
+        html.write(str(soup))
+
 def render_all():
 
     notes = set()
@@ -125,6 +142,7 @@ def render_all():
                 extra_args=(RENDERER_CONFIG["pandoc_extra_args"])
             )
 
+            update_img_tags(output_file)
             add_toc(file_path, output_file)
 
             metadata = get_metadata(file_path)

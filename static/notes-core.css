@@ -281,6 +281,12 @@ a {
         font-size: 1em;
     }
 
+    .content img {
+        max-width: 90vw;
+        margin: 0;
+        padding: 0;
+    }    
+
     .navcontainer {
         width: 100vw;
         display: flex;
