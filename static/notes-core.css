@@ -87,6 +87,7 @@ button::-moz-focus-inner {
     max-width: 800px;
     display: block;
     margin: auto;
+    background-color: #fff
 }
 
 .mobile_dropdown {
