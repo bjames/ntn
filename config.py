@@ -8,7 +8,7 @@ RENDERER_CONFIG = {
     "image_file_extensions": (".jpg", ".jpeg", ".png", ".svg"),
     "output_directory": f"{SCRIPT_PATH}/static/rendered/",
     "image_directory": f"{SCRIPT_PATH}/static/images/post/",
-    "pandoc_extra_args": [],
+    "pandoc_extra_args": ["--from=markdown-implicit_figures"],
 }
 NOTES_DIR = "notes"
 SITE_NAME = "It's Never The Network"
