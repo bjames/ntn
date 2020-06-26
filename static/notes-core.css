@@ -274,10 +274,6 @@ a {
         padding: 5px;
     }
 
-    * {
-        font-size: 1em;
-    }
-
     .content img {
         max-width: 90vw;
         margin: auto;
