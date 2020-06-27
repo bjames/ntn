@@ -14,5 +14,8 @@
     </url>
     {% endfor %}
     <!-- End Generated Content -->
+    <url>
+        <loc>https://{{ config.URI }}/tools</loc>
+    </url>
     
 </urlset>
