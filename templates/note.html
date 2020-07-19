@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block head %}<link rel="canonical" href="https://{{ config.URI }}/{{ config.NOTES_DIR }}/{{ note.filename }}"/>{% endblock %}
 {% block body_class %}note{% endblock %}
 {% block content %}
 {% if note is defined %}
